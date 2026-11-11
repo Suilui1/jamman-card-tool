@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.101 — 2026-11-11
+
+Fix: `pegel-umkehren` / "Pegel zurückrechnen" no longer crashes when the
+chosen file is not a level protocol. Before, `lies_pegelprotokoll()` opened
+the file with `encoding="utf-8"` and no guard, so a WAV, a missing file or a
+folder ended in a Python traceback
+(`UnicodeDecodeError: 'utf-8' codec can't decode byte 0x92 …` /
+`FileNotFoundError`). Now it reports in the same plain language as the rest
+of the tool and the window shows a dialog:
+
+* `Fehler: '<pfad>' gibt es nicht.`
+* `Fehler: '<pfad>' ist ein Ordner, keine Datei.`
+* `Fehler: '<pfad>' ist kein Pegelprotokoll (keine lesbare Textdatei).`
+* `Fehler: '<pfad>' darf nicht gelesen werden.`
+
+Checked on 11.11.2026 with four cases (WAV, missing file, folder, README)
+and with a real protocol from `alle-normieren`: error cases give a sentence,
+the real protocol still reverses 24 patches.
+
 ## 3.100 — 2026-11-11
 
 README: the splitting feature now has its own section in both languages

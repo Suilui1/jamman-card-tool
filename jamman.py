@@ -82,7 +82,7 @@ MAX_LOOP_SEKUNDEN = 600
 
 WOLL = (44100, 16, 2)          # was der JamMan erwartet: 44,1 kHz, 16 Bit, Stereo
 
-FASSUNG = "3.100 (11.11.2026)"
+FASSUNG = "3.101 (11.11.2026)"
 WINDOWS = os.name == "nt"
 MAC = sys.platform == "darwin"
 
@@ -477,9 +477,29 @@ def schreibe_pegelprotokoll(basis, eintraege, grund, wurzel=None):
 
 
 def lies_pegelprotokoll(pfad):
-    """Liest ein Pegelprotokoll: Liste aus Ordner, Faktor je Zeile."""
+    """Liest ein Pegelprotokoll: Liste aus Ordner, Faktor je Zeile.
+
+    Fehler werden als SystemExit gemeldet, nicht als Ausnahme: sonst sah
+    der Nutzer bei einer falsch gewählten Datei einen Traceback statt eines
+    Satzes (gefunden am 11.11.2026: eine WAV als Protokoll gewählt).
+    """
+    try:
+        with open(pfad, encoding="utf-8") as datei:
+            zeilen = datei.readlines()
+    except FileNotFoundError:
+        raise SystemExit("Fehler: '%s' gibt es nicht." % pfad)
+    except IsADirectoryError:
+        raise SystemExit("Fehler: '%s' ist ein Ordner, keine Datei." % pfad)
+    except UnicodeDecodeError:
+        raise SystemExit("Fehler: '%s' ist kein Pegelprotokoll "
+                         "(keine lesbare Textdatei)." % pfad)
+    except PermissionError:
+        raise SystemExit("Fehler: '%s' darf nicht gelesen werden." % pfad)
+    except OSError as fehler:
+        raise SystemExit("Fehler: '%s' lässt sich nicht lesen: %s"
+                         % (pfad, fehler))
     eintraege = []
-    for zeile in open(pfad, encoding="utf-8"):
+    for zeile in zeilen:
         if zeile.startswith("#") or not zeile.strip():
             continue
         teile = zeile.rstrip("\n").split("\t")
