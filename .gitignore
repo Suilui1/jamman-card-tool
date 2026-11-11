@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Persönliche Daten und Testkarten gehören nicht ins Repository
+testcard/
+JamMan-Sicherung/
+*.wav
+!example.wav

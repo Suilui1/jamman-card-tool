@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JamMan Solo XT am Mac, PC oder Linux verwalten — Ersatz für JamManager XT</title>
+<meta name="description" content="JamManager XT stürzt auf aktuellen macOS-Versionen ab? Dieses Werkzeug verwaltet die Speicherkarte des DigiTech JamMan Solo XT unter macOS, Windows und Linux: Patches anhören, umbenennen, sortieren, aufspielen, sichern. Kostenlos, fünf Sprachen.">
+<meta name="keywords" content="JamManager XT Ersatz, JamManager XT Alternative Mac, JamMan Solo XT Software Mac, JamMan Speicherkarte verwalten, JamMan Patches umbenennen, DigiTech JamMan, Looper verwalten, macOS, Windows, Linux">
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #1e1e1e; color: #f2f2f2;
+         font: 16px/1.55 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; }
+  h2 { font-size: 20px; margin: 34px 0 10px; border-bottom: 1px solid #3a3a3a;
+       padding-bottom: 6px; }
+  .lead { color: #b8b8b8; margin: 0 0 22px; font-size: 17px; }
+  a { color: #6cb0ea; }
+  .knoepfe { display: flex; gap: 12px; flex-wrap: wrap; margin: 22px 0; }
+  .knopf { display: inline-block; padding: 11px 18px; border-radius: 8px;
+           text-decoration: none; font-weight: 600; }
+  .haupt { background: #2f6fb3; color: #fff; }
+  .neben { background: #2a2a2a; color: #f2f2f2; border: 1px solid #3f3f3f; }
+  .spende { background: #e8b04b; color: #201a08; }
+  img { max-width: 100%; border-radius: 8px; border: 1px solid #333; }
+  code, pre { background: #161616; border-radius: 6px; }
+  code { padding: 2px 5px; font-size: 14px; }
+  pre { padding: 12px 14px; overflow-x: auto; font-size: 14px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid #333; }
+  th { color: #c8c8c8; font-weight: 600; }
+  .ja { color: #5fd08a; }
+  .nein { color: #d98a8a; }
+  footer { margin-top: 40px; color: #8a8a8a; font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>JamMan Solo XT am Mac, PC oder Linux verwalten</h1>
+<p class="lead">Ersatz für <strong>JamManager XT</strong> (DigiTech, 2012), das auf
+aktuellen macOS-Versionen abstürzt. Arbeitet direkt auf der Speicherkarte —
+ohne Treiber, ohne Installation, ohne Konto.</p>
+
+<div class="knoepfe">
+  <a class="knopf haupt" href="https://github.com/Suilui1/jamman-card-tool/releases/latest">Herunterladen</a>
+  <a class="knopf neben" href="https://github.com/Suilui1/jamman-card-tool">Quelltext ansehen</a>
+  <a class="knopf spende" href="https://www.paypal.com/donate/?hosted_button_id=PEJEFMSKUPA8C&currency_code=EUR">Etwas beitragen</a>
+</div>
+
+<img src="fenster-deutsch.png" alt="Fenster des Werkzeugs mit der Patch-Liste einer JamMan-Karte">
+
+<h2>Das Problem</h2>
+<p>Der <em>JamManager XT</em> von DigiTech ist von 2012 und läuft auf macOS 14 und
+neuer nicht mehr — er stürzt beim Start ab. Damit lässt sich am Rechner nichts
+mehr sortieren, umbenennen oder sichern. Auf der Karte selbst liegt alles als
+WAV-Datei mit XML daneben; das ist lesbar, aber von Hand mühsam.</p>
+
+<h2>Was dieses Werkzeug kann</h2>
+<table>
+  <tr><th>Was</th><th>Wie</th></tr>
+  <tr><td>Patches ansehen und anhören</td><td>Liste mit Dauer, Stoppart, Wiedergabe, Rhythmus; Klick in die Wellenform springt an die Stelle</td></tr>
+  <tr><td>Nahtlos weiterhören</td><td>mehrere Patches als eine Datei — keine Lücke beim Übergang</td></tr>
+  <tr><td>Sortieren</td><td>Zeilen ziehen, ▲▼, Tauschen, auf einen freien Platz legen</td></tr>
+  <tr><td>Aufspielen</td><td>WAV direkt; MP3, M4A, FLAC, OGG über ffmpeg — auf 44,1 kHz / 16 Bit / Stereo gebracht</td></tr>
+  <tr><td>10-Minuten-Grenze umgehen</td><td>lange Aufnahme an Pausen teilen, sample-genau, ohne Verlust</td></tr>
+  <tr><td>Pegel</td><td>normieren, anheben, mit 0-dBFS-Begrenzung</td></tr>
+  <tr><td>Sicherheit</td><td>vor jedem Eingriff wird gesichert; auf Wunsch beim Start, wenn sich die Karte geändert hat</td></tr>
+  <tr><td>Zurückholen</td><td>einzelne Patches oder die ganze Karte aus einer Sicherung</td></tr>
+</table>
+
+<h2>Systeme</h2>
+<table>
+  <tr><th>System</th><th>Stand</th></tr>
+  <tr><td>macOS (Apple Silicon und Intel)</td><td class="ja">läuft, im Einsatz</td></tr>
+  <tr><td>Windows 10</td><td class="ja">läuft</td></tr>
+  <tr><td>Linux (Ubuntu Studio)</td><td class="ja">läuft</td></tr>
+  <tr><td>Android</td><td class="nein">geht nicht — kein tkinter, Karte lässt sich nicht beschreiben</td></tr>
+</table>
+<p>Nötig ist nur <strong>Python 3 mit tkinter</strong>. Für MP3 und M4A zusätzlich
+<code>ffmpeg</code>. Keine weiteren Pakete.</p>
+
+<h2>Sprachen</h2>
+<p>Deutsch, Englisch, Französisch, Spanisch, Chinesisch — im Fenster oben rechts
+umschaltbar, oder mit <code>--sprache</code> auf der Kommandozeile.</p>
+
+<h2>Loslegen</h2>
+<pre>git clone https://github.com/Suilui1/jamman-card-tool.git
+cd jamman-card-tool
+./JamMan.command        # macOS
+JamMan.bat              # Windows
+./JamMan.sh             # Linux</pre>
+<p>Oder das ZIP von der <a href="https://github.com/Suilui1/jamman-card-tool/releases/latest">Release-Seite</a>
+nehmen und entpacken.</p>
+
+<h2>Kostenlos, aber nicht umsonst</h2>
+<p>Das Werkzeug ist kostenlos und bleibt es. Wer es nützlich findet, kann über
+<a href="https://www.paypal.com/donate/?hosted_button_id=PEJEFMSKUPA8C&currency_code=EUR">PayPal</a>
+etwas beitragen — auch mit Kreditkarte, ohne PayPal-Konto.</p>
+
+<footer>
+  <p>Lizenz MIT · <a href="https://github.com/Suilui1/jamman-card-tool">Quelltext und Anleitung auf GitHub</a><br>
+  JamMan und DigiTech sind Marken ihrer Inhaber. Dieses Werkzeug gehört nicht zu
+  DigiTech und wird von dort nicht unterstützt.</p>
+</footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+MP3 und M4A brauchen ffmpeg
+
+Das JamMan Solo XT nimmt nur WAV (44,1 kHz, 16 Bit, Stereo).
+Zum Umwandeln von MP3, M4A, AAC, FLAC oder OGG braucht dieses
+Werkzeug unter Windows das Programm ffmpeg.
+
+Weg 1 - mit Windows-Bordmitteln (empfohlen)
+
+  1. Startmenu -> "Eingabeaufforderung" oder "PowerShell" öffnen
+  2. Diesen Befehl eintippen und Enter drücken:
+
+         winget install --id Gyan.FFmpeg
+
+  3. Warten, bis "Successfully installed" erscheint
+  4. Das JamMan-Werkzeug neu starten
+
+Weg 2 - ohne Installation
+
+  1. https://www.gyan.dev/ffmpeg/builds/ aufrufen
+  2. "ffmpeg-release-essentials.zip" herunterladen
+  3. Entpacken, im Ordner bin liegt ffmpeg.exe
+  4. Diese ffmpeg.exe neben jamman.py kopieren (gleicher Ordner)
+
+Weg 3 - von Hand
+
+  ffmpeg.exe nach C:\ffmpeg\bin\ legen - dieser Ort wird auch gefunden,
+  ohne dass etwas an PATH geändert werden muss.
+
+Prüfen, ob es geklappt hat
+
+  In der Eingabeaufforderung:   ffmpeg -version
+  Oder im Werkzeug:             jamman.py selbsttest
+  Dort steht dann eine Zeile "ffmpeg: C:\...\ffmpeg.exe".
+
+Ohne ffmpeg geht weiterhin alles mit WAV-Dateien.
+
+------------------------------------------------------------
+
+Linux:
+
+Das JamMan Solo XT nimmt nur WAV (44,1 kHz, 16 Bit, Stereo).
+Zum Umwandeln anderer Formate braucht das Werkzeug ffmpeg.
+
+  Debian/Ubuntu:   sudo apt install ffmpeg
+  Fedora:          sudo dnf install ffmpeg
+  Arch:            sudo pacman -S ffmpeg
+  openSUSE:        sudo zypper install ffmpeg
+
+Ohne ffmpeg geht weiterhin alles mit WAV-Dateien.

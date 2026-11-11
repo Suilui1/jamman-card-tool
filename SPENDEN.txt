@@ -1,0 +1,20 @@
+Unterstützen
+===========
+
+Dieses Werkzeug ist kostenlos und bleibt kostenlos. Wer es nützlich
+findet, darf gern etwas beitragen - muss aber nicht.
+
+    https://www.paypal.com/donate/?hosted_button_id=PEJEFMSKUPA8C&currency_code=EUR
+
+Der Link steckt an drei Stellen und ist überall derselbe:
+
+1. jamman.py, Zeile SPENDEN_LINK   - öffnet den Knopf "Spenden" im Fenster
+2. README.md, Abschnitt "Support"
+3. README.de.md, Abschnitt "Unterstützen"
+
+Was mit dem Geld geschieht: Es geht an Hendrik Alfred Julius Krause
+(Krausemusik) als Anerkennung für die Arbeit. Es gibt keine Gegenleistung
+und keinen Support-Anspruch.
+
+Die Kennung hosted_button_id ist öffentlich - sie steckt in jedem
+PayPal-Spendenknopf. Kontodaten stehen nicht darin.
