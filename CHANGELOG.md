@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.102 — 2026-11-12
+
+Feature: the tool now also opens cards from the **JamMan Stereo**.
+
+A user in the Bassic forum reported the card being rejected with "that is
+not a JamMan card". The reason was the device folder: the Solo XT writes
+`JamManSoloXT`, the Stereo writes `JamManStereo`. Below that the layout is
+the same (`Patch01` … `Patch99`, each with `PhraseA/phrase.xml`,
+`phrase.wav` and `patch.xml`).
+
+Now both names are accepted — and any other spelling with different case.
+The folder that was found is used for every later step, so nothing else had
+to change. The message when no card is found names both folders.
+
+**Tested:** with a rebuilt Stereo card (folder structure, listing, reading
+the patch name) and with a Solo XT card. **Not tested on a real Stereo
+pedal** — copying to a Stereo card is therefore still "first make a full
+copy of the card".
+
 ## 3.101 — 2026-11-11
 
 Fix: `pegel-umkehren` / "Pegel zurückrechnen" no longer crashes when the

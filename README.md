@@ -2,6 +2,10 @@
 
 **Manage the SD card of a DigiTech JamMan Solo XT from macOS, Windows or Linux — without JamManager XT.**
 
+Cards from the **JamMan Stereo** are also recognised: same folder layout, only the
+device folder is called `JamManStereo`. Reading and listing are tested with a rebuilt
+Stereo card; **writing has not been tested on a Stereo pedal** — copy the card first.
+
 The official DigiTech *JamManager XT* (version 2.0, 2012) crashes on recent
 macOS releases as soon as the pedal is connected:
 

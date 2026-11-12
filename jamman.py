@@ -82,7 +82,7 @@ MAX_LOOP_SEKUNDEN = 600
 
 WOLL = (44100, 16, 2)          # was der JamMan erwartet: 44,1 kHz, 16 Bit, Stereo
 
-FASSUNG = "3.101 (11.11.2026)"
+FASSUNG = "3.102 (12.11.2026)"
 WINDOWS = os.name == "nt"
 MAC = sys.platform == "darwin"
 
@@ -135,28 +135,25 @@ def karten_diagnose():
             except OSError as e:
                 zeilen.append("  %-28s  (nicht lesbar: %s)" % (p, e.strerror))
                 continue
-            if UNTERORDNER in unter or UNTERORDNER.lower() in [u.lower() for u in unter]:
-                ordner = os.path.join(p, next(u for u in unter
-                                              if u.lower() == UNTERORDNER.lower()))
+            treffer_name = kartenordner_in(p)
+            if treffer_name:
+                ordner = os.path.join(p, treffer_name)
                 try:
                     anz = len([x for x in os.listdir(ordner)
                                if re.fullmatch(r"Patch\d+", x, re.IGNORECASE)])
                 except OSError:
                     anz = -1
-                zeilen.append("  %-28s  JamManSoloXT mit %s Patches"
-                              % (p, anz if anz >= 0 else "?"))
+                zeilen.append("  %-28s  %s mit %s Patches"
+                              % (p, treffer_name, anz if anz >= 0 else "?"))
             elif not MAC and not WINDOWS:
                 # Linux hängt manchmal eine Ebene tiefer ein
                 for name2 in unter:
                     p2 = os.path.join(p, name2)
                     if not os.path.isdir(p2):
                         continue
-                    try:
-                        unter2 = os.listdir(p2)
-                    except OSError:
-                        continue
-                    if [u.lower() for u in unter2].count(UNTERORDNER.lower()):
-                        zeilen.append("  %-28s  JamManSoloXT gefunden" % p2)
+                    tiefer = kartenordner_in(p2)
+                    if tiefer:
+                        zeilen.append("  %-28s  %s gefunden" % (p2, tiefer))
     return zeilen
 
 
@@ -198,7 +195,7 @@ def karten_kandidaten():
         except OSError:
             continue
         for e in eintraege:
-            if e.lower() != UNTERORDNER.lower():
+            if e.lower() not in [w.lower() for w in KARTENORDNER]:
                 continue
             ordner = os.path.join(p, e)
             try:
@@ -237,7 +234,7 @@ def standard_karte():
     if WINDOWS:
         for buchstabe in "DEFGHIJKLMNOPQRSTUVWXYZABC":
             p = "%s:\\" % buchstabe
-            if os.path.isdir(os.path.join(p, UNTERORDNER)):
+            if kartenordner_in(p):
                 return p
         return "D:\\"
 
@@ -250,7 +247,7 @@ def standard_karte():
             continue
         for name in sorted(os.listdir(wurzel)):
             p = os.path.join(wurzel, name)
-            if os.path.isdir(os.path.join(p, UNTERORDNER)):
+            if kartenordner_in(p):
                 kandidaten.append(p)
     return kandidaten[0] if kandidaten else "/media"
 
@@ -911,6 +908,11 @@ def auswerfen_datentraeger(karte):
     return False, "Auswerfen wird auf diesem System nicht unterstützt"
 
 UNTERORDNER = "JamManSoloXT"
+# Ein JamMan legt auf der Karte einen Ordner mit seinem Gerätenamen an.
+# Solo XT und Stereo sind darunter gleich aufgebaut (Patch01 … / PhraseA /
+# patch.xml). Belegt am 12.11.2026: ein Nutzer im Bassic-Forum hat den
+# Stereo erreicht, indem er im Skript „SoloXT" durch „Stereo" ersetzte.
+KARTENORDNER = ("JamManSoloXT", "JamManStereo")
 
 
 def schrift(groesse, fest=False, titel=False):
@@ -930,31 +932,41 @@ def schrift(groesse, fest=False, titel=False):
 
 # ---------------------------------------------------------------- Grundlagen
 
+def kartenordner_in(p):
+    """Name des JamMan-Ordners in p, oder None. Groß/klein ist egal."""
+    try:
+        eintraege = os.listdir(p)
+    except OSError:
+        return None
+    for wunsch in KARTENORDNER:
+        for e in eintraege:
+            if e.lower() == wunsch.lower() and os.path.isdir(os.path.join(p, e)):
+                return e
+    return None
+
+
 def karte_pruefen(pfad):
-    """Gibt den Ordner JamManSoloXT zurück oder bricht mit klarer Meldung ab."""
+    """Gibt den Ordner des Geräts zurück oder bricht mit klarer Meldung ab.
+
+    Der Ordner heißt je nach Gerät "JamManSoloXT" oder "JamManStereo";
+    darunter ist der Aufbau gleich. Welcher gefunden wurde, steht danach
+    in UNTERORDNER - alle späteren Pfade bauen darauf auf.
+    """
+    global UNTERORDNER
     p = os.path.abspath(os.path.expanduser(pfad))
     if not os.path.isdir(p):
-        raise SystemExit("Fehler: '%s' ist kein Ordner. Ist die Karte eingelegt?" % pfad)
-    # Wurde schon der JamManSoloXT-Ordner selbst gewählt? Dann direkt nehmen.
-    if os.path.basename(p).lower() == UNTERORDNER.lower():
-        return p
-    tief = os.path.join(p, UNTERORDNER)
-    if not os.path.isdir(tief):
-        # Der JamMan legt den Ordner selbst an; auf fremden Karten kann er
-        # anders geschrieben sein (JAMMANSOLOXT, Jammansoloxt …).
-        try:
-            for eintrag in os.listdir(p):
-                if eintrag.lower() == UNTERORDNER.lower():
-                    kandidat = os.path.join(p, eintrag)
-                    if os.path.isdir(kandidat):
-                        tief = kandidat
-                        break
-        except OSError:
-            pass
-    if not os.path.isdir(tief):
-        raise SystemExit("Fehler: auf '%s' liegt kein Ordner '%s'. "
-                         "Das ist keine JamMan-Karte." % (p, UNTERORDNER))
-    return tief
+        raise SystemExit(T("Fehler: '%s' ist kein Ordner. Ist die Karte eingelegt?") % pfad)
+    # Wurde schon der Geräteordner selbst gewählt? Dann direkt nehmen.
+    for wunsch in KARTENORDNER:
+        if os.path.basename(p).lower() == wunsch.lower():
+            UNTERORDNER = os.path.basename(p)
+            return p
+    gefunden = kartenordner_in(p)
+    if gefunden:
+        UNTERORDNER = gefunden
+        return os.path.join(p, gefunden)
+    raise SystemExit(T("Fehler: auf '%s' liegt kein Ordner '%s' oder '%s'. "
+                         "Das ist keine JamMan-Karte.") % (p, KARTENORDNER[0], KARTENORDNER[1]))
 
 
 def ist_ordner(pfad):
