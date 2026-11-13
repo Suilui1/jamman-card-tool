@@ -1,7 +1,10 @@
 # jamman-card-tool — deutsche Anleitung
 
-Die Speicherkarte des **DigiTech JamMan Solo XT** von macOS, Windows oder
-Linux aus verwalten — ohne JamManager XT.
+Die Speicherkarte des **DigiTech JamMan Solo XT und Stereo** von macOS,
+Windows oder Linux aus verwalten — ohne JamManager XT.
+
+*English version: [README.md](README.md) · Seite mit Bildern:
+https://www.julius-k.de/tool/*
 
 Karten des **JamMan Stereo** werden ebenfalls erkannt: gleicher Aufbau,
 nur heißt der Geräteordner `JamManStereo`. Geprüft mit einer nachgebauten

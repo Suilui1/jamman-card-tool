@@ -146,6 +146,10 @@ Ready for publication:
 * A local git repository with two commits, so publishing is one command.
   Tracked: 13 files plus three screenshots; no audio, no card data.
 
+*Removed on 2026-11-13: `GITHUB-VEROEFFENTLICHEN.txt` (a note on how to
+publish the repository) is no longer in the repository — it stays in the
+history and in the author's notes.*
+
 ## 3.97 — 2026-11-10
 
 English command names and a translated `--help`:

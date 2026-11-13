@@ -1,6 +1,10 @@
 # jamman-card-tool
 
-**Manage the SD card of a DigiTech JamMan Solo XT from macOS, Windows or Linux — without JamManager XT.**
+**Manage the SD card of a DigiTech JamMan Solo XT or Stereo from macOS, Windows
+or Linux — without JamManager XT.**
+
+*Deutsche Fassung: [README.de.md](README.de.md) · Seite mit Bildern:
+https://www.julius-k.de/tool/en/*
 
 Cards from the **JamMan Stereo** are also recognised: same folder layout, only the
 device folder is called `JamManStereo`. Tested with a rebuilt Stereo card and, since
