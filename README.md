@@ -27,6 +27,24 @@ No ffmpeg, no Homebrew, no build step.
 
 ![Window](docs/fenster-englisch.png)
 
+## New versions
+
+When the window opens, the tool asks GitHub **once a day** for the latest
+release. If it is newer than the running copy, a hint appears offering to open
+the download page. The request runs in the background — without a network the
+window opens just as fast and nothing is reported.
+
+All that is sent is the request to `api.github.com`: no card, no file names,
+no user name.
+
+To switch it off, put
+
+```
+update_pruefung=nein
+```
+
+into the settings file (its path is printed by `jamman.py selbsttest`).
+
 ## What it does
 
 | Command | Effect |

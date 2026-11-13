@@ -23,6 +23,25 @@ Reines Python 3 mit der Standardbibliothek. Kein ffmpeg, kein Homebrew.
 
 ![Fenster](docs/fenster-deutsch.png)
 
+## Neue Fassungen
+
+Beim Öffnen des Fensters fragt das Werkzeug **einmal am Tag** bei GitHub nach
+der neuesten Fassung. Ist sie neuer als die laufende, erscheint ein Hinweis mit
+dem Angebot, die Download-Seite zu öffnen. Die Abfrage läuft im Hintergrund —
+ohne Netz öffnet sich das Fenster genauso schnell, und es wird nichts gemeldet.
+
+Übertragen wird dabei nur die Anfrage an `api.github.com`: keine Karte, keine
+Dateinamen, kein Benutzername.
+
+Abschalten: in der Einstellungsdatei (Pfad zeigt `jamman.py selbsttest`) die
+Zeile
+
+```
+update_pruefung=nein
+```
+
+eintragen.
+
 ## Was es kann
 
 | Befehl | Wirkung |

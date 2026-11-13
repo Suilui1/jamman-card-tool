@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.104 — 2026-11-13
+
+Feature: the window tells you when a newer version exists.
+
+On opening, the tool asks GitHub once a day for the latest release. If that
+release is newer than the running copy, it offers to open the download page.
+The question runs in a background thread, so the window never waits for the
+network; without a connection nothing is shown and nothing is reported.
+
+No data is sent beyond the plain request to `api.github.com` — no version of
+the card, no file names, no user name. The check can be switched off: put
+`update_pruefung=nein` into the settings file (its path is shown by
+`jamman.py selbsttest`).
+
 ## 3.103 — 2026-11-13
 
 Fix: the window no longer disappears when there is no card.

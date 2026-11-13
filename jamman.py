@@ -53,6 +53,7 @@ import struct
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import uuid
 import wave
@@ -82,7 +83,7 @@ MAX_LOOP_SEKUNDEN = 600
 
 WOLL = (44100, 16, 2)          # was der JamMan erwartet: 44,1 kHz, 16 Bit, Stereo
 
-FASSUNG = "3.103 (13.11.2026)"
+FASSUNG = "3.104 (13.11.2026)"
 WINDOWS = os.name == "nt"
 MAC = sys.platform == "darwin"
 
@@ -2257,6 +2258,7 @@ TEXTE = {
         "Tk-Modul:      %s": "Tk module:    %s",
         "Schrift:       %s": "Font:         %s",
         "Kartenwurzeln: %s": "Card roots:   %s",
+        "Einstellungen: %s": "Settings:      %s",
         "ffmpeg:        %s": "ffmpeg:       %s",
         "gewählt:       %s": "chosen:       %s",
         "Ton:           %s": "Sound:        %s",
@@ -2315,6 +2317,10 @@ TEXTE = {
         "Betroffene Einträge (erste drei): %s": "Affected entries (first three): %s",
         "Keine Karte gefunden unter %s.": "No card found under %s.",
         "Keine Karte gefunden": "No card found",
+        "Neue Fassung verfügbar": "New version available",
+        "Es gibt eine neuere Fassung: %s. Sie benutzen %s.":
+            "There is a newer version: %s. You are using %s.",
+        "Zur Download-Seite wechseln?": "Open the download page?",
         "Es liegt keine JamMan-Karte im Rechner.":
             "There is no JamMan card in this computer.",
         "Nimm die microSD aus dem Pedal und stecke sie in einen Kartenleser "
@@ -3598,6 +3604,7 @@ def selbsttest(pfad=None):
                      if shutil.which(x)]
         print(T("  Ton:           %s") % (", ".join(programme) or "KEINES gefunden"))
     print(T("  Kartenwurzeln: %s") % ", ".join(karten_wurzeln()))
+    print(T("  Einstellungen: %s") % os.path.expanduser(EINSTELLUNG_DATEI))
     ff = werkzeug_pfad("ffmpeg")
     print(T("  ffmpeg:        %s") % (ff if ff else
           "fehlt - MP3/M4A lassen sich nicht umwandeln (nur WAV)"))
@@ -3690,6 +3697,33 @@ def karte_finden(pfad=None, streng=False):
     return None
 
 
+def fassung_pruefen(zeitlimit=4):
+    """Fragt bei GitHub nach der neuesten Fassung. Gibt "3.104" zurück oder None.
+
+    Läuft im Hintergrund; ohne Netz oder bei Zeitüberschreitung kommt None
+    zurück und niemand merkt etwas davon.
+    """
+    import json
+    import urllib.request
+    adresse = ("https://api.github.com/repos/Suilui1/"
+               "jamman-card-tool/releases/latest")
+    anfrage = urllib.request.Request(adresse, headers={
+        "User-Agent": "jamman-card-tool",
+        "Accept": "application/vnd.github+json"})
+    try:
+        with urllib.request.urlopen(anfrage, timeout=zeitlimit) as antwort:
+            daten = json.load(antwort)
+    except Exception:
+        return None
+    tag = (daten.get("tag_name") or "").strip().lstrip("vV")
+    return tag or None
+
+
+def eigene_fassung():
+    """Nur die Nummer aus FASSUNG: "3.103 (13.11.2026)" -> "3.103"."""
+    return FASSUNG.split()[0]
+
+
 def gui(karte):
     """Oberfläche. Der Ton läuft nebenher: kein Warten, Stopp jederzeit."""
     # Sicherung beim Start - vor dem Fenster, damit man den Fortschritt
@@ -3742,6 +3776,58 @@ def gui(karte):
             fenster.destroy()
             return
         fenster.deiconify()
+
+    # Einmal am Tag bei GitHub nachsehen, ob es eine neuere Fassung gibt.
+    # Läuft im Hintergrund: ohne Netz startet das Fenster trotzdem sofort.
+    def fassung_melden(tag):
+        try:
+            if tag and tag != eigene_fassung():
+                if messagebox.askyesno(
+                        T("Neue Fassung verfügbar"),
+                        T("Es gibt eine neuere Fassung: %s. Sie benutzen %s.")
+                        % (tag, eigene_fassung()) + "\n\n"
+                        + T("Zur Download-Seite wechseln?")):
+                    import webbrowser
+                    webbrowser.open("https://github.com/Suilui1/"
+                                    "jamman-card-tool/releases/latest")
+        except Exception:
+            pass
+
+    def fassung_im_hintergrund():
+        """Fragt im Hintergrund bei GitHub nach; das Fenster wartet nicht.
+
+        Der Fund wird NICHT aus dem Nebenlauf ans Fenster gemeldet -
+        tkinter darf nur aus dem Hauptlauf angesprochen werden. Der
+        Hauptlauf fragt stattdessen alle 300 ms nach.
+        """
+        if einstellung_lesen("update_pruefung") == "nein":
+            return
+        heute = datetime.now().strftime("%Y-%m-%d")
+        if einstellung_lesen("update_geprueft") == heute:
+            return
+
+        stand = {"fertig": False, "tag": None}
+
+        def lauf():
+            tag = fassung_pruefen()
+            try:
+                einstellung_schreiben("update_geprueft", heute)
+            except Exception:
+                pass
+            stand["tag"] = tag
+            stand["fertig"] = True
+
+        def nachsehen():
+            if not stand["fertig"]:
+                fenster.after(300, nachsehen)
+                return
+            if stand["tag"]:
+                fassung_melden(stand["tag"])
+
+        threading.Thread(target=lauf, daemon=True).start()
+        fenster.after(300, nachsehen)
+
+    fassung_im_hintergrund()
 
     # Sprachwahl oben rechts. Ein Wechsel öffnet das Fenster neu, damit
     # alle Beschriftungen in der neuen Sprache erscheinen.
