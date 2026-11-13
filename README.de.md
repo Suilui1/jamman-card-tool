@@ -4,9 +4,10 @@ Die Speicherkarte des **DigiTech JamMan Solo XT** von macOS, Windows oder
 Linux aus verwalten — ohne JamManager XT.
 
 Karten des **JamMan Stereo** werden ebenfalls erkannt: gleicher Aufbau,
-nur heißt der Geräteordner `JamManStereo`. Lesen und Auflisten sind mit
-einer nachgebauten Stereo-Karte geprüft; **Schreiben ist an einem echten
-Stereo-Pedal nicht getestet** — Karte vorher kopieren.
+nur heißt der Geräteordner `JamManStereo`. Geprüft mit einer nachgebauten
+Stereo-Karte und seit 13.11.2026 **von einem Nutzer an einem echten
+JamMan Stereo unter Linux bestätigt** ("Funktioniert, top.") — trotzdem
+vor dem ersten Schreiben die Karte kopieren.
 
 **Hintergrund:** Das offizielle Programm *JamManager XT* (Version 2.0 von
 2012) stürzt auf aktuellen macOS-Versionen ab, sobald das Pedal erkannt

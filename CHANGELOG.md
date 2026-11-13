@@ -15,9 +15,12 @@ The folder that was found is used for every later step, so nothing else had
 to change. The message when no card is found names both folders.
 
 **Tested:** with a rebuilt Stereo card (folder structure, listing, reading
-the patch name) and with a Solo XT card. **Not tested on a real Stereo
-pedal** — copying to a Stereo card is therefore still "first make a full
-copy of the card".
+the patch name) and with a Solo XT card.
+
+**Confirmed on a real pedal (2026-11-13):** the user who reported the
+problem ran 3.102 on his JamMan Stereo under Linux and wrote back:
+"Funktioniert, top." Writing to a Stereo card still deserves a full copy of
+the card first — but it is no longer untested ground.
 
 ## 3.101 — 2026-11-11
 
