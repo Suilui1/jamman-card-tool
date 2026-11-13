@@ -251,8 +251,14 @@ und später).
 |---|---|
 | macOS 27, Apple Silicon | getestet, alle Funktionen |
 | macOS 15, Intel (MacBook Pro 2012) | getestet, alle Funktionen |
-| Windows 10 | **noch nicht getestet** — Rückmeldung willkommen |
-| Linux | **noch nicht getestet** — Rückmeldung willkommen |
+| Windows 10 | vom Verfasser getestet (Fenster und Kommandozeile) |
+| Linux (Ubuntu Studio) | vom Verfasser getestet |
+| Linux (Kubuntu) | von einem Nutzer bestätigt, **JamMan Stereo** |
+
+„Getestet" heißt: Fenster geöffnet, Karte gelesen, ein Patch geschrieben und
+am Pedal zurückgelesen. Für den **Stereo** gibt es bisher eine Rückmeldung —
+von dem Nutzer unter Kubuntu. Unter Windows hat noch niemand eine
+Stereo-Karte gemeldet.
 
 Auf manchen Intel-Macs bringt Apples Python 3.9 das alte Tk 8.5.9 mit, das
 beim Öffnen eines Fensters abstürzt. `JamMan.command` erkennt das und

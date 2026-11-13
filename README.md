@@ -264,8 +264,13 @@ or the "cue" button plays the parts without a gap (version 3.27 and later).
 |---|---|
 | macOS 27, Apple Silicon | tested, all functions |
 | macOS 15, Intel (MacBook Pro 2012) | tested, all functions |
-| Windows 10 | **not tested yet** — please report |
-| Linux | **not tested yet** — please report |
+| Windows 10 | tested by the author (window and command line) |
+| Linux (Ubuntu Studio) | tested by the author |
+| Linux (Kubuntu) | confirmed by a user, **JamMan Stereo** |
+
+"Tested" means: the window opened, a card was read, a patch was written and
+read back on the pedal. For the **Stereo** there is one report so far — from
+the user on Kubuntu. Nobody has reported a Stereo card on Windows yet.
 
 On some Intel Macs Apple's bundled Python 3.9 ships with Tk 8.5.9, which
 aborts when opening a window. `JamMan.command` detects this and falls

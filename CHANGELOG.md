@@ -12,6 +12,11 @@ other languages; the catalogues hold 452 entries each.
 Checked in all five languages: `play`, `delete`, `import`, a card that is
 not a card, and a missing folder.
 
+Also corrected: the status table in both READMEs still said Windows 10 and
+Linux were "not tested yet". They have been tested (Windows 10 and Ubuntu
+Studio by the author, Kubuntu by the user with the Stereo), and the table
+now says what "tested" means.
+
 ## 3.105 — 2026-11-13
 
 Fix: the translations were behind — in two ways.
