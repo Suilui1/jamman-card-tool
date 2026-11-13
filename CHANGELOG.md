@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.103 — 2026-11-13
+
+Fix: the window no longer disappears when there is no card.
+
+Before, `gui()` looked for the card **before** building the window. Without a
+card that ended in a `SystemExit` — and with it the program: on Windows the
+window flashed up and closed at once, on Linux apparently nothing happened at
+all. A user hit exactly this when he plugged the pedal in by USB instead of
+putting the card into a reader.
+
+Now the window is built first. If no card is found, it says so in plain words
+— "take the microSD out of the pedal and put it into a card reader; with the
+USB cable attached it does not show up as a drive" — and offers to pick the
+folder by hand.
+
+Also: `JamMan.bat` and `JamMan.sh` now wait for a key press when the program
+ends with an error, so the message can be read instead of vanishing with the
+console window.
+
 ## 3.102 — 2026-11-12
 
 Feature: the tool now also opens cards from the **JamMan Stereo**.

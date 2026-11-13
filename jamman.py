@@ -82,7 +82,7 @@ MAX_LOOP_SEKUNDEN = 600
 
 WOLL = (44100, 16, 2)          # was der JamMan erwartet: 44,1 kHz, 16 Bit, Stereo
 
-FASSUNG = "3.102 (12.11.2026)"
+FASSUNG = "3.103 (13.11.2026)"
 WINDOWS = os.name == "nt"
 MAC = sys.platform == "darwin"
 
@@ -2314,6 +2314,17 @@ TEXTE = {
         "Zuordnung liegt in: %s": "Mapping is in: %s",
         "Betroffene Einträge (erste drei): %s": "Affected entries (first three): %s",
         "Keine Karte gefunden unter %s.": "No card found under %s.",
+        "Keine Karte gefunden": "No card found",
+        "Es liegt keine JamMan-Karte im Rechner.":
+            "There is no JamMan card in this computer.",
+        "Nimm die microSD aus dem Pedal und stecke sie in einen Kartenleser "
+            "oder Kartenslot. Über das USB-Kabel am Pedal erscheint sie nicht "
+            "als Laufwerk.":
+            "Take the microSD out of the pedal and put it into a card reader or a "
+            "card slot. With the USB cable attached it does not show up as a drive.",
+        "Ordner selbst wählen?": "Pick the folder yourself?",
+        "Ordner der Karte wählen": "Choose the card's folder",
+        "Keine JamMan-Karte": "Not a JamMan card",
         "wie Vorlage": "as template",
         "   ← wird umgewandelt": "   ← will be converted",
         "   ← abweichend": "   ← deviates",
@@ -3701,11 +3712,36 @@ def gui(karte):
         menu(karte)
         return
 
-    basis = karte_finden(karte, streng=True)
+    basis = karte_finden(karte, streng=False)
 
     fenster = tk.Tk()
     fenster.minsize(1000, 720)
     fenster.configure(bg=FARBE_HINTERGRUND)
+
+    # Ohne Karte früher: Absturz vor dem Fenster (SystemExit). Unter Windows
+    # blitzte das Fenster kurz auf und schloss sich, unter Linux passierte
+    # gar nichts. Jetzt sagt das Fenster selbst, was zu tun ist.
+    if basis is None:
+        fenster.withdraw()
+        ordner = None
+        if messagebox.askyesno(
+                T("Keine Karte gefunden"),
+                T("Es liegt keine JamMan-Karte im Rechner.") + "\n\n"
+                + T("Nimm die microSD aus dem Pedal und stecke sie in einen "
+                    "Kartenleser oder Kartenslot. Über das USB-Kabel am Pedal "
+                    "erscheint sie nicht als Laufwerk.") + "\n\n"
+                + T("Ordner selbst wählen?")):
+            ordner = filedialog.askdirectory(title=T("Ordner der Karte wählen"))
+        if not ordner:
+            fenster.destroy()
+            return
+        try:
+            basis = karte_pruefen(ordner)
+        except SystemExit as fehler:
+            messagebox.showerror(T("Keine JamMan-Karte"), str(fehler))
+            fenster.destroy()
+            return
+        fenster.deiconify()
 
     # Sprachwahl oben rechts. Ein Wechsel öffnet das Fenster neu, damit
     # alle Beschriftungen in der neuen Sprache erscheinen.
