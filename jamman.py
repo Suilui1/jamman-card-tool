@@ -2483,6 +2483,23 @@ TEXTE = {
         "  erste Zeile im Fenster:": "    first line in the window:",
         "    %r": "      %r",
         "JamMan Solo XT": "  JamMan Solo XT",
+        "BEFEHL": "COMMAND",
+        "  Auswahl: ": "  Choice: ",
+        "  Anderer Pfad (leer = beenden): ": "  Another path (empty = quit): ",
+        "  Patch-Nummer: ": "  Patch number: ",
+        "  Name (leer = Dateiname): ": "  Name (empty = file name): ",
+        "  Stopp (fade/instant, leer = wie Vorlage): ": "  Stop (fade/instant, empty = as template): ",
+        "  Wiedergabe (loop/single, leer = wie Vorlage): ": "  Playback (loop/single, empty = as template): ",
+        "  Pfad zur Audiodatei: ": "  Path to the audio file: ",
+        "  Stopp (fade/instant, leer = lassen): ": "  Stop (fade/instant, empty = keep): ",
+        "  Wiedergabe (loop/single, leer = lassen): ": "  Playback (loop/single, empty = keep): ",
+        "  Neuer Name (leer = lassen): ": "  New name (empty = keep): ",
+        "  Wirklich schreiben? (j/n): ": "  Really write? (y/n): ",
+        "  Welcher Patch: ": "  Which patch: ",
+        "  An welche Stelle: ": "  To which slot: ",
+        "  Wirklich verschieben? (j/n): ": "  Really move? (y/n): ",
+        "  Zielordner (leer = ~/JamMan-Sicherung): ": "  Target folder (empty = ~/JamMan-Sicherung): ",
+        "  Wirklich löschen? (j/n): ": "  Really delete? (y/n): ",
         "Keine Karte gefunden": "No card found",
         "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "No player found (aplay, paplay, mpv or ffplay).",
         "Fehler: im Protokoll stehen keine Einträge.": "Error: the protocol has no entries.",
@@ -2764,6 +2781,23 @@ TEXTE = {
         'Zuordnung liegt in: %s': 'Correspondance dans : %s',
         'Betroffene Einträge (erste drei): %s': 'Entrées concernées (trois premières) : %s',
         'Keine Karte gefunden unter %s.': 'Aucune carte trouvée sous %s.',
+        "BEFEHL": "COMMANDE",
+        "  Auswahl: ": "  Choix : ",
+        "  Anderer Pfad (leer = beenden): ": "  Autre chemin (vide = quitter) : ",
+        "  Patch-Nummer: ": "  Numéro du patch : ",
+        "  Name (leer = Dateiname): ": "  Nom (vide = nom du fichier) : ",
+        "  Stopp (fade/instant, leer = wie Vorlage): ": "  Arrêt (fade/instant, vide = comme le modèle) : ",
+        "  Wiedergabe (loop/single, leer = wie Vorlage): ": "  Lecture (loop/single, vide = comme le modèle) : ",
+        "  Pfad zur Audiodatei: ": "  Chemin du fichier audio : ",
+        "  Stopp (fade/instant, leer = lassen): ": "  Arrêt (fade/instant, vide = garder) : ",
+        "  Wiedergabe (loop/single, leer = lassen): ": "  Lecture (loop/single, vide = garder) : ",
+        "  Neuer Name (leer = lassen): ": "  Nouveau nom (vide = garder) : ",
+        "  Wirklich schreiben? (j/n): ": "  Vraiment écrire ? (o/n) : ",
+        "  Welcher Patch: ": "  Quel patch : ",
+        "  An welche Stelle: ": "  À quel emplacement : ",
+        "  Wirklich verschieben? (j/n): ": "  Vraiment déplacer ? (o/n) : ",
+        "  Zielordner (leer = ~/JamMan-Sicherung): ": "  Dossier cible (vide = ~/JamMan-Sicherung) : ",
+        "  Wirklich löschen? (j/n): ": "  Vraiment supprimer ? (o/n) : ",
         "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "Aucun lecteur trouvé (aplay, paplay, mpv ou ffplay).",
         "Fehler: im Protokoll stehen keine Einträge.": "Erreur : le protocole ne contient aucune entrée.",
         "Fehler: Datei ließ sich nicht umwandeln.": "Erreur : le fichier n'a pas pu être converti.",
@@ -3216,6 +3250,23 @@ TEXTE = {
         'Zuordnung liegt in: %s': 'La correspondencia está en: %s',
         'Betroffene Einträge (erste drei): %s': 'Entradas afectadas (las tres primeras): %s',
         'Keine Karte gefunden unter %s.': 'No se encontró tarjeta en %s.',
+        "BEFEHL": "ORDEN",
+        "  Auswahl: ": "  Opción: ",
+        "  Anderer Pfad (leer = beenden): ": "  Otra ruta (vacío = salir): ",
+        "  Patch-Nummer: ": "  Número del patch: ",
+        "  Name (leer = Dateiname): ": "  Nombre (vacío = nombre del archivo): ",
+        "  Stopp (fade/instant, leer = wie Vorlage): ": "  Parada (fade/instant, vacío = como plantilla): ",
+        "  Wiedergabe (loop/single, leer = wie Vorlage): ": "  Reproducción (loop/single, vacío = como plantilla): ",
+        "  Pfad zur Audiodatei: ": "  Ruta del archivo de audio: ",
+        "  Stopp (fade/instant, leer = lassen): ": "  Parada (fade/instant, vacío = dejar): ",
+        "  Wiedergabe (loop/single, leer = lassen): ": "  Reproducción (loop/single, vacío = dejar): ",
+        "  Neuer Name (leer = lassen): ": "  Nombre nuevo (vacío = dejar): ",
+        "  Wirklich schreiben? (j/n): ": "  ¿Escribir de verdad? (s/n): ",
+        "  Welcher Patch: ": "  ¿Qué patch?: ",
+        "  An welche Stelle: ": "  ¿A qué plaza?: ",
+        "  Wirklich verschieben? (j/n): ": "  ¿Mover de verdad? (s/n): ",
+        "  Zielordner (leer = ~/JamMan-Sicherung): ": "  Carpeta de destino (vacío = ~/JamMan-Sicherung): ",
+        "  Wirklich löschen? (j/n): ": "  ¿Eliminar de verdad? (s/n): ",
         "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "No se encontró ningún reproductor (aplay, paplay, mpv o ffplay).",
         "Fehler: im Protokoll stehen keine Einträge.": "Error: el protocolo no tiene entradas.",
         "Fehler: Datei ließ sich nicht umwandeln.": "Error: el archivo no se pudo convertir.",
@@ -3668,6 +3719,23 @@ TEXTE = {
         'Zuordnung liegt in: %s': '对应关系位于：%s',
         'Betroffene Einträge (erste drei): %s': '受影响的条目（前三个）：%s',
         'Keine Karte gefunden unter %s.': '在 %s 下未找到存储卡。',
+        "BEFEHL": "命令",
+        "  Auswahl: ": "  选择：",
+        "  Anderer Pfad (leer = beenden): ": "  其他路径（留空 = 退出）：",
+        "  Patch-Nummer: ": "  音色编号：",
+        "  Name (leer = Dateiname): ": "  名称（留空 = 文件名）：",
+        "  Stopp (fade/instant, leer = wie Vorlage): ": "  停止方式（fade/instant，留空 = 同模板）：",
+        "  Wiedergabe (loop/single, leer = wie Vorlage): ": "  播放方式（loop/single，留空 = 同模板）：",
+        "  Pfad zur Audiodatei: ": "  音频文件路径：",
+        "  Stopp (fade/instant, leer = lassen): ": "  停止方式（fade/instant，留空 = 保持）：",
+        "  Wiedergabe (loop/single, leer = lassen): ": "  播放方式（loop/single，留空 = 保持）：",
+        "  Neuer Name (leer = lassen): ": "  新名称（留空 = 保持）：",
+        "  Wirklich schreiben? (j/n): ": "  真的要写入吗？（y/n）：",
+        "  Welcher Patch: ": "  哪个音色：",
+        "  An welche Stelle: ": "  放到哪个位置：",
+        "  Wirklich verschieben? (j/n): ": "  真的要移动吗？（y/n）：",
+        "  Zielordner (leer = ~/JamMan-Sicherung): ": "  目标文件夹（留空 = ~/JamMan-Sicherung）：",
+        "  Wirklich löschen? (j/n): ": "  真的要删除吗？（y/n）：",
         "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "未找到播放程序（aplay、paplay、mpv 或 ffplay）。",
         "Fehler: im Protokoll stehen keine Einträge.": "错误：记录中没有条目。",
         "Fehler: Datei ließ sich nicht umwandeln.": "错误：文件无法转换。",
@@ -4427,7 +4495,7 @@ def menu(karte):
             basis = karte_pruefen(karte)
         except SystemExit:
             print(T("  Keine Karte gefunden unter %s.") % karte)
-            neu = input("  Anderer Pfad (leer = beenden): ").strip()
+            neu = input(T("  Anderer Pfad (leer = beenden): ")).strip()
             if not neu:
                 return
             karte = neu
@@ -4444,7 +4512,7 @@ def menu(karte):
         print(T("  7  Alles sichern"))
         print(T("  8  Karte auswerfen"))
         print(T("  0  Beenden"))
-        wahl = input("  Auswahl: ").strip()
+        wahl = input(T("  Auswahl: ")).strip()
 
         try:
             if wahl == "0":
@@ -4452,32 +4520,32 @@ def menu(karte):
             elif wahl == "1":
                 befehl_liste(basis)
             elif wahl == "2":
-                befehl_abspielen(basis, int(input("  Patch-Nummer: ").strip()))
+                befehl_abspielen(basis, int(input(T("  Patch-Nummer: ")).strip()))
             elif wahl == "3":
-                datei = input("  Pfad zur Audiodatei: ").strip().strip("'")
-                name = input("  Name (leer = Dateiname): ").strip() or None
-                st = input("  Stopp (fade/instant, leer = wie Vorlage): ").strip() or None
-                wg = input("  Wiedergabe (loop/single, leer = wie Vorlage): ").strip() or None
-                if input("  Wirklich schreiben? (j/n): ").strip().lower() == "j":
+                datei = input(T("  Pfad zur Audiodatei: ")).strip().strip("'")
+                name = input(T("  Name (leer = Dateiname): ")).strip() or None
+                st = input(T("  Stopp (fade/instant, leer = wie Vorlage): ")).strip() or None
+                wg = input(T("  Wiedergabe (loop/single, leer = wie Vorlage): ")).strip() or None
+                if input(T("  Wirklich schreiben? (j/n): ")).strip().lower() in ("j", "y", "ja", "yes"):
                     befehl_aufspielen(basis, datei, name, True, st, None, wg)
             elif wahl == "4":
-                nr = int(input("  Patch-Nummer: ").strip())
-                st = input("  Stopp (fade/instant, leer = lassen): ").strip() or None
-                wg = input("  Wiedergabe (loop/single, leer = lassen): ").strip() or None
-                nm = input("  Neuer Name (leer = lassen): ").strip() or None
-                if input("  Wirklich schreiben? (j/n): ").strip().lower() == "j":
+                nr = int(input(T("  Patch-Nummer: ")).strip())
+                st = input(T("  Stopp (fade/instant, leer = lassen): ")).strip() or None
+                wg = input(T("  Wiedergabe (loop/single, leer = lassen): ")).strip() or None
+                nm = input(T("  Neuer Name (leer = lassen): ")).strip() or None
+                if input(T("  Wirklich schreiben? (j/n): ")).strip().lower() in ("j", "y", "ja", "yes"):
                     befehl_aendern(basis, nr, True, st, None, wg, nm)
             elif wahl == "5":
-                von = int(input("  Welcher Patch: ").strip())
-                nach = int(input("  An welche Stelle: ").strip())
-                if input("  Wirklich verschieben? (j/n): ").strip().lower() == "j":
+                von = int(input(T("  Welcher Patch: ")).strip())
+                nach = int(input(T("  An welche Stelle: ")).strip())
+                if input(T("  Wirklich verschieben? (j/n): ")).strip().lower() in ("j", "y", "ja", "yes"):
                     befehl_verschieben(basis, von, nach, True)
             elif wahl == "6":
-                nr = int(input("  Welcher Patch: ").strip())
-                if input("  Wirklich löschen? (j/n): ").strip().lower() == "j":
+                nr = int(input(T("  Welcher Patch: ")).strip())
+                if input(T("  Wirklich löschen? (j/n): ")).strip().lower() in ("j", "y", "ja", "yes"):
                     befehl_loeschen(basis, nr, True)
             elif wahl == "7":
-                ziel = input("  Zielordner (leer = ~/JamMan-Sicherung): ").strip() or "~/JamMan-Sicherung"
+                ziel = input(T("  Zielordner (leer = ~/JamMan-Sicherung): ")).strip() or "~/JamMan-Sicherung"
                 befehl_sichern(basis, ziel, True)
             elif wahl == "8":
                 befehl_auswerfen(karte)
@@ -6455,7 +6523,7 @@ def main():
         epilog=befehlsliste(),
         formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--version", action="version", version="JamMan-Werkzeug " + FASSUNG)
-    p.add_argument("befehl", metavar="BEFEHL",
+    p.add_argument("befehl", metavar=T("BEFEHL"),
                    choices=sorted(list(BEFEHLE) + list(BEFEHL_ALIAS)),
                    help=T("was zu tun ist (Liste unten; englische Namen gehen auch)"))
     p.add_argument("--sprache", choices=sorted(SPRACHEN),

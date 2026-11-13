@@ -2,20 +2,26 @@
 
 ## 3.106 — 2026-11-13
 
-Fix: the error messages on the command line were German only.
+Fix: several places still spoke German in every language.
 
-54 `SystemExit("Fehler: …")` calls never went through `T()`, so `play` on an
-English window answered "Fehler: --patch fehlt." — and the same in French,
-Spanish and Chinese. All 54 are wrapped now and translated into the four
-other languages; the catalogues hold 452 entries each.
+* 54 `SystemExit("Fehler: …")` calls never went through `T()`: `play` on an
+  English window answered "Fehler: --patch fehlt."
+* all 19 prompts of the text menu (`input()`) were German, including the
+  "Auswahl:" line the French menu showed.
+* the positional argument appeared as `BEFEHL` in the usage line of every
+  language; it is now translated (`COMMAND`, `COMMANDE`, `ORDEN`, `命令`).
+* the yes/no questions only accepted `j`; `y`, `ja` and `yes` work as well
+  (`o` still does in French, `s` in Spanish — any of j/y/ja/yes/o/s counts).
 
-Checked in all five languages: `play`, `delete`, `import`, a card that is
-not a card, and a missing folder.
+All texts are translated into English, French, Spanish and Chinese; the four
+catalogues hold 469 entries each. Audited with a script: every `T()` string
+has an entry, no `print`, `input` or `SystemExit` carries untranslated German,
+and the placeholders match in all five languages.
 
 Also corrected: the status table in both READMEs still said Windows 10 and
 Linux were "not tested yet". They have been tested (Windows 10 and Ubuntu
-Studio by the author, Kubuntu by the user with the Stereo), and the table
-now says what "tested" means.
+Studio by the author, Kubuntu by the user with the Stereo), and the table now
+says what "tested" means.
 
 ## 3.105 — 2026-11-13
 
