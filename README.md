@@ -15,8 +15,10 @@ Tcl_Panic -> TkpInit -> _tkinter -> Tk()   ->  SIGABRT
 ```
 
 DigiTech does not maintain the software any more. This tool avoids it
-completely: it works **directly on the SD card**, which the pedal exposes
-as an ordinary USB drive.
+completely: it works **directly on the SD card**. For that the microSD has
+to come out of the pedal and go into a card reader or slot — with the USB
+cable attached, the pedal does not show up as a drive on current macOS
+versions.
 
 Everything is plain Python 3 with the standard library only.
 No ffmpeg, no Homebrew, no build step.

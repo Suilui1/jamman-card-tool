@@ -12,9 +12,10 @@ vor dem ersten Schreiben die Karte kopieren.
 **Hintergrund:** Das offizielle Programm *JamManager XT* (Version 2.0 von
 2012) stürzt auf aktuellen macOS-Versionen ab, sobald das Pedal erkannt
 wird (`Tcl_Panic` in `TkpInit`), und wird nicht mehr gepflegt. Dieses
-Werkzeug arbeitet **direkt auf der Speicherkarte**, die das Pedal als
-normales USB-Laufwerk einhängt. Kein Windows, kein Rosetta, kein
-Emulator.
+Werkzeug arbeitet **direkt auf der Speicherkarte**. Dafür muß die microSD
+aus dem Pedal heraus und in einen Kartenleser oder Kartenslot — über das
+USB-Kabel meldet sich das Pedal unter aktuellen macOS-Versionen nicht als
+Laufwerk. Kein Windows, kein Rosetta, kein Emulator.
 
 Reines Python 3 mit der Standardbibliothek. Kein ffmpeg, kein Homebrew.
 
