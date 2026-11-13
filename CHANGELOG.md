@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.105 — 2026-11-13
+
+Fix: the translations were behind — in two ways.
+
+First, the catalogues for `fr`, `es` and `zh` had 211 entries against 251 in
+English, so everything added since 3.101 (command line options, the new
+dialogs) appeared in English on a French, Spanish or Chinese window.
+
+Second — and larger — 153 German texts were passed through `T()` without
+being in any catalogue: the command line output, the column headers of the
+patch list, the whole self test. A non-German window showed German there.
+All of them are translated into English now; `fr`, `es` and `zh` inherit the
+English text for them until their own translation follows.
+
+Also corrected: the user who confirmed 3.102 on a real JamMan Stereo uses
+**Kubuntu**, not "Linux" in general. CHANGELOG, both READMEs and the landing
+page say so.
+
 ## 3.104 — 2026-11-13
 
 Feature: the window tells you when a newer version exists.
@@ -51,9 +69,9 @@ to change. The message when no card is found names both folders.
 the patch name) and with a Solo XT card.
 
 **Confirmed on a real pedal (2026-11-13):** the user who reported the
-problem ran 3.102 on his JamMan Stereo under Linux and wrote back:
-"Funktioniert, top." Which distribution he uses was not stated. The author
-tested the tool itself on Ubuntu Studio and Windows 10. Writing to a Stereo
+problem ran 3.102 on his JamMan Stereo under Kubuntu and wrote back:
+"Funktioniert, top." The author tested the tool itself on Ubuntu Studio and
+Windows 10. Writing to a Stereo
 card still deserves a full copy of the card first — but it is no longer
 untested ground.
 
