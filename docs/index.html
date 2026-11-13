@@ -42,6 +42,8 @@
   .hinweis { margin: 18px 0 22px; padding: 12px 14px; font-size: 15px;
              border-left: 3px solid #e8b04b; background: #241f16; border-radius: 4px; }
   .hinweis strong { color: #e8b04b; }
+  .links { margin: 10px 0 0; padding-left: 22px; font-size: 15px; }
+  .links li { margin: 6px 0; }
   .klein { margin: -8px 0 18px; font-size: 14px; color: #8a8a8a; }
   .sprachen { margin: 0 0 18px; font-size: 14px; color: #8a8a8a; }
   .sprachen a { color: #6cb0ea; text-decoration: none; }
@@ -107,6 +109,17 @@ WAV-Datei mit XML daneben; das ist lesbar, aber von Hand mühsam.</p>
 </table>
 <p>Nötig ist nur <strong>Python 3 mit tkinter</strong>. Für MP3 und M4A zusätzlich
 <code>ffmpeg</code>. Keine weiteren Pakete.</p>
+<ul class="links">
+  <li><a href="https://www.python.org/downloads/macos/">Python für macOS</a> —
+  die Fassung von python.org bringt Tk 8.6 mit. Apples eigenes Python hat Tk 8.5,
+  damit bleibt das Fenster leer.</li>
+  <li><a href="https://www.python.org/downloads/windows/">Python für Windows</a> —
+  im Installer „Add python.exe to PATH" anhaken.</li>
+  <li>Linux: <code>sudo apt install python3-tk</code> (Ubuntu/Debian, tkinter ist
+  dort nicht dabei).</li>
+  <li><a href="https://ffmpeg.org/download.html">ffmpeg</a> — nur für MP3 und M4A
+  nötig, für WAV nicht.</li>
+</ul>
 
 <h2>Sprachen</h2>
 <p>Deutsch, Englisch, Französisch, Spanisch, Chinesisch — im Fenster oben rechts
