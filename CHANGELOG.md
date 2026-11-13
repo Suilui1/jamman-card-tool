@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.106 — 2026-11-13
+
+Fix: the error messages on the command line were German only.
+
+54 `SystemExit("Fehler: …")` calls never went through `T()`, so `play` on an
+English window answered "Fehler: --patch fehlt." — and the same in French,
+Spanish and Chinese. All 54 are wrapped now and translated into the four
+other languages; the catalogues hold 452 entries each.
+
+Checked in all five languages: `play`, `delete`, `import`, a card that is
+not a card, and a missing folder.
+
 ## 3.105 — 2026-11-13
 
 Fix: the translations were behind — in two ways.

@@ -83,7 +83,7 @@ MAX_LOOP_SEKUNDEN = 600
 
 WOLL = (44100, 16, 2)          # was der JamMan erwartet: 44,1 kHz, 16 Bit, Stereo
 
-FASSUNG = "3.105 (13.11.2026)"
+FASSUNG = "3.106 (13.11.2026)"
 WINDOWS = os.name == "nt"
 MAC = sys.platform == "darwin"
 
@@ -296,7 +296,7 @@ def abspielen_datei(pfad):
         if shutil.which(befehl[0]):
             return subprocess.Popen(befehl, stdout=subprocess.DEVNULL,
                                     stderr=subprocess.DEVNULL)
-    raise SystemExit("Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).")
+    raise SystemExit(T("Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay)."))
 
 
 def stoppen_ton(griff):
@@ -485,16 +485,16 @@ def lies_pegelprotokoll(pfad):
         with open(pfad, encoding="utf-8") as datei:
             zeilen = datei.readlines()
     except FileNotFoundError:
-        raise SystemExit("Fehler: '%s' gibt es nicht." % pfad)
+        raise SystemExit(T("Fehler: '%s' gibt es nicht.") % pfad)
     except IsADirectoryError:
-        raise SystemExit("Fehler: '%s' ist ein Ordner, keine Datei." % pfad)
+        raise SystemExit(T("Fehler: '%s' ist ein Ordner, keine Datei.") % pfad)
     except UnicodeDecodeError:
-        raise SystemExit("Fehler: '%s' ist kein Pegelprotokoll "
-                         "(keine lesbare Textdatei)." % pfad)
+        raise SystemExit(T("Fehler: '%s' ist kein Pegelprotokoll "
+                         "(keine lesbare Textdatei).") % pfad)
     except PermissionError:
-        raise SystemExit("Fehler: '%s' darf nicht gelesen werden." % pfad)
+        raise SystemExit(T("Fehler: '%s' darf nicht gelesen werden.") % pfad)
     except OSError as fehler:
-        raise SystemExit("Fehler: '%s' lässt sich nicht lesen: %s"
+        raise SystemExit(T("Fehler: '%s' lässt sich nicht lesen: %s")
                          % (pfad, fehler))
     eintraege = []
     for zeile in zeilen:
@@ -515,7 +515,7 @@ def befehl_pegel_umkehren(basis, protokoll, schreiben, wurzel=None):
     """Pegeländerung aus einem Protokoll zurückrechnen."""
     eintraege = lies_pegelprotokoll(protokoll)
     if not eintraege:
-        raise SystemExit("Fehler: im Protokoll stehen keine Einträge.")
+        raise SystemExit(T("Fehler: im Protokoll stehen keine Einträge."))
     print(T("  Protokoll: %s") % protokoll)
     print(T("  %d Einträge") % len(eintraege))
     if not schreiben:
@@ -1560,7 +1560,7 @@ def befehl_teilen(basis, wav, name, schreiben, teile=None, laenge=None,
     """
     dauer, rate, kanaele, bits = wav_info(wav)
     if dauer <= 0:
-        raise SystemExit("Fehler: '%s' ist keine lesbare Audiodatei." % wav)
+        raise SystemExit(T("Fehler: '%s' ist keine lesbare Audiodatei.") % wav)
     if laenge:
         anzahl = max(1, int(math.ceil(dauer / float(laenge))))
         stueck = float(laenge)
@@ -1568,10 +1568,10 @@ def befehl_teilen(basis, wav, name, schreiben, teile=None, laenge=None,
         anzahl = max(1, int(teile))
         stueck = dauer / float(anzahl)
     else:
-        raise SystemExit("Fehler: --teile N oder --laenge SEKUNDEN angeben.")
+        raise SystemExit(T("Fehler: --teile N oder --laenge SEKUNDEN angeben."))
     if stueck > MAX_LOOP_SEKUNDEN:
-        raise SystemExit("Fehler: %.1f Minuten pro Teil sind zu lang "
-                         "(Grenze %d Minuten)." % (stueck / 60.0, MAX_LOOP_SEKUNDEN //
+        raise SystemExit(T("Fehler: %.1f Minuten pro Teil sind zu lang "
+                         "(Grenze %d Minuten).") % (stueck / 60.0, MAX_LOOP_SEKUNDEN //
                                                    60))
     print(T("  Datei:  %s") % os.path.basename(wav))
     print(T("  Dauer:  %s") % sekunden(dauer))
@@ -1583,7 +1583,7 @@ def befehl_teilen(basis, wav, name, schreiben, teile=None, laenge=None,
     ganz = os.path.join(zwischer, "ganz.wav")
     if not wandle_nach_44k(wav, ganz):
         shutil.rmtree(zwischer, ignore_errors=True)
-        raise SystemExit("Fehler: Datei ließ sich nicht umwandeln.")
+        raise SystemExit(T("Fehler: Datei ließ sich nicht umwandeln."))
     dauer = wav_info(ganz)[0]
 
     mitteilen = []
@@ -1638,7 +1638,7 @@ def befehl_teilen(basis, wav, name, schreiben, teile=None, laenge=None,
         for i, (von, bis) in enumerate(mitteilen, start=1):
             teil = os.path.join(zwischer, "teil%d.wav" % i)
             if not schneide_bereich(ganz, teil, von, bis):
-                raise SystemExit("Fehler: Teil %d ließ sich nicht schneiden." % i)
+                raise SystemExit(T("Fehler: Teil %d ließ sich nicht schneiden." )% i)
             befehl_aufspielen(basis, teil, "%s %d/%d" % (name, i, anzahl),
                               True, stopp, None, wiedergabe)
     finally:
@@ -1651,10 +1651,10 @@ def befehl_aufspielen(basis, wav, name, schreiben, stopp=None, rhythmus=None,
                       laenge=None):
     wav = os.path.abspath(os.path.expanduser(wav))
     if not os.path.exists(wav):
-        raise SystemExit("Fehler: '%s' gibt es nicht." % wav)
+        raise SystemExit(T("Fehler: '%s' gibt es nicht.") % wav)
     dauer, rate, kanaele, bits = wav_info(wav)
     if dauer <= 0:
-        raise SystemExit("Fehler: '%s' ist keine lesbare Audiodatei.%s"
+        raise SystemExit(T("Fehler: '%s' ist keine lesbare Audiodatei.%s")
                          % (wav, unlesbar_hinweis(wav)))
     ziel_laenge = None
     if dauer > MAX_LOOP_SEKUNDEN:
@@ -1664,7 +1664,7 @@ def befehl_aufspielen(basis, wav, name, schreiben, stopp=None, rhythmus=None,
             ziel_laenge = float(MAX_LOOP_SEKUNDEN) - 1.0     # 9:59, mit Luft
         elif not trotzdem:
             raise SystemExit(
-                "Fehler: Die Datei ist %.1f Minuten lang.\n"
+                T("Fehler: Die Datei ist %.1f Minuten lang.\n"
                 "  Der JamMan Solo XT nimmt höchstens %d Minuten pro Loop an\n"
                 "  (Handbuch, Seite 60: \"Max. Individual Loop Time: 10 minutes\").\n"
                 "  Längere Loops erscheinen auf der Karte, werden vom Pedal aber\n"
@@ -1673,7 +1673,7 @@ def befehl_aufspielen(basis, wav, name, schreiben, stopp=None, rhythmus=None,
                 "    --kuerzen            auf 9:59 kürzen (harter Schnitt am Ende,\n"
                 "                         12 ms ausgeblendet, damit es nicht knackt)\n"
                 "    --laenge 480         auf 8:00 kürzen\n"
-                "    --trotzdem           unverändert schreiben (zum Ausprobieren)"
+                "    --trotzdem           unverändert schreiben (zum Ausprobieren)")
                 % (dauer / 60.0, MAX_LOOP_SEKUNDEN // 60))
 
     passt = (rate, kanaele, bits) == WOLL
@@ -1701,9 +1701,9 @@ def befehl_aufspielen(basis, wav, name, schreiben, stopp=None, rhythmus=None,
     print(T("  Neuer Patch:  Patch%s  (Name: %s)") % (zielnummer, name))
     print(T("  Vorlage:      %s") % (os.path.basename(vorlage) if vorlage else "KEINE — Abbruch"))
     if not vorlage:
-        raise SystemExit("Fehler: kein vollständiger Patch als Vorlage gefunden.")
+        raise SystemExit(T("Fehler: kein vollständiger Patch als Vorlage gefunden."))
     if os.path.exists(zielpfad):
-        raise SystemExit("Fehler: '%s' liegt schon vor." % zielpfad)
+        raise SystemExit(T("Fehler: '%s' liegt schon vor.") % zielpfad)
     if not schreiben:
         print(T("  Trockenlauf — nichts geschrieben. Mit --schreiben ausführen."))
         return
@@ -1717,16 +1717,16 @@ def befehl_aufspielen(basis, wav, name, schreiben, stopp=None, rhythmus=None,
     else:
         if not wandle_nach_44k(wav, ziel_wav):
             raise SystemExit(
-                "Fehler beim Umwandeln. Die Datei hat %d Hz / %d Kanal/Kanäle;\n"
+                T("Fehler beim Umwandeln. Die Datei hat %d Hz / %d Kanal/Kanäle;\n"
                 "  nötig sind 44100 Hz und 2 Kanäle. Bitte vorher umwandeln oder\n"
-                "  ffmpeg installieren." % (rate, kanaele))
+                "  ffmpeg installieren.") % (rate, kanaele))
 
     if ziel_laenge:
         if kuerze_wav(ziel_wav, ziel_laenge):
             print(T("  Kürzen:       auf %s geschnitten (harter Schnitt, "
                   "12 ms ausgeblendet)") % sekunden(ziel_laenge))
         else:
-            raise SystemExit("Fehler: Die Datei ließ sich nicht kürzen.")
+            raise SystemExit(T("Fehler: Die Datei ließ sich nicht kürzen."))
 
     # Kopf auf einfaches PCM umschreiben - das Pedal lehnt manche
     # WAVE_FORMAT_EXTENSIBLE-Dateien ab (aus M4A entstehend).
@@ -1739,8 +1739,8 @@ def befehl_aufspielen(basis, wav, name, schreiben, stopp=None, rhythmus=None,
     spitze, _ = pegel_info(ziel_wav)
     if spitze is None or spitze < -90:
         shutil.rmtree(zielpfad, ignore_errors=True)
-        raise SystemExit("Fehler: Die Umwandlung hat keine hörbare Aufnahme\n"
-                         "  ergeben (nur Stille). Datei prüfen: %s" % os.path.basename(wav))
+        raise SystemExit(T("Fehler: Die Umwandlung hat keine hörbare Aufnahme\n"
+                         "  ergeben (nur Stille). Datei prüfen: %s" )% os.path.basename(wav))
 
     if fade:
         if not fade_ausblenden(ziel_wav, fade):
@@ -1809,8 +1809,8 @@ def sicherung_der_einstellungen(basis, pfad, grund, wurzel=None):
             if os.path.exists(quelle):
                 shutil.copy2(quelle, os.path.join(ziel, name))
     except OSError:
-        raise SystemExit("Fehler: '%s' lässt sich nicht schreiben.\n"
-                         "  Nimm einen anderen Ordner:  --sicherung <pfad>" % ordner)
+        raise SystemExit(T("Fehler: '%s' lässt sich nicht schreiben.\n"
+                         "  Nimm einen anderen Ordner:  --sicherung <pfad>") % ordner)
     return os.path.dirname(ziel)
 
 
@@ -1820,12 +1820,12 @@ def befehl_aendern(basis, nummer, schreiben, stopp=None, rhythmus=None,
     """Einstellungen eines vorhandenen Patches ändern."""
     alle = dict((n, pf) for n, _, pf in patches(basis))
     if nummer not in alle:
-        raise SystemExit("Fehler: Patch%d gibt es nicht." % nummer)
+        raise SystemExit(T("Fehler: Patch%d gibt es nicht.") % nummer)
     pfad = alle[nummer]
     print(T("  Patch:        %s  (%s)") % (os.path.basename(pfad), patch_name(pfad)))
     if not (stopp or rhythmus or wiedergabe or name or fade or gain or normieren):
-        raise SystemExit("Fehler: nichts angegeben (--stopp, --rhythmus, "
-                         "--wiedergabe, --name oder --fade).")
+        raise SystemExit(T("Fehler: nichts angegeben (--stopp, --rhythmus, "
+                         "--wiedergabe, --name oder --fade)."))
     if stopp:      print(T("  Stopp:        %s (%s)") % (stopp, STOPP[stopp]))
     if rhythmus:   print(T("  Rhythmus:     %s (%s)") % (rhythmus, RHYTHMUS[rhythmus][0]))
     if wiedergabe: print(T("  Wiedergabe:   %s (IsLoop %s)") % (wiedergabe, WIEDERGABE[wiedergabe]))
@@ -1867,17 +1867,17 @@ def befehl_aendern(basis, nummer, schreiben, stopp=None, rhythmus=None,
     if fade or gain or normieren:
         wav = os.path.join(pfad, "PhraseA", "phrase.wav")
         if not os.path.exists(wav):
-            raise SystemExit("Fehler: Patch%d hat keine phrase.wav." % nummer)
+            raise SystemExit(T("Fehler: Patch%d hat keine phrase.wav.") % nummer)
         if normalisiere_wav(wav):
             print(T("  Kopf:         WAV-Kopf auf einfaches PCM umgeschrieben"))
         if fade and not fade_ausblenden(wav, fade):
-            raise SystemExit("Fehler: Die Aufnahme ließ sich nicht ausblenden "
-                             "(kein 16-Bit-WAV?).")
+            raise SystemExit(T("Fehler: Die Aufnahme ließ sich nicht ausblenden "
+                             "(kein 16-Bit-WAV?)."))
         if gain or normieren:
             ergebnis = (pegel_anpassen(wav, ziel_spitze_db=-1.0) if normieren
                         else pegel_anpassen(wav, db=gain, begrenzen=begrenzen))
             if not ergebnis:
-                raise SystemExit("Fehler: Der Pegel ließ sich nicht ändern.")
+                raise SystemExit(T("Fehler: Der Pegel ließ sich nicht ändern."))
             print_pegel(ergebnis)
 
     saeubere_karte(basis)
@@ -1888,7 +1888,7 @@ def befehl_auswerfen(karte):
     """Karte auswerfen. Vorher werden die Apple-Dateien entfernt."""
     ziel = volumen_pfad(karte)
     if not os.path.isdir(ziel):
-        raise SystemExit("Fehler: '%s' ist nicht eingelegt." % karte)
+        raise SystemExit(T("Fehler: '%s' ist nicht eingelegt.") % karte)
     try:
         saeubere_karte(os.path.join(ziel, UNTERORDNER))
     except Exception:
@@ -1897,7 +1897,7 @@ def befehl_auswerfen(karte):
     if erfolg:
         print(T("  %s Sie kann jetzt abgezogen werden.") % meldung)
     else:
-        raise SystemExit("Fehler beim Auswerfen: %s" % meldung)
+        raise SystemExit(T("Fehler beim Auswerfen: %s") % meldung)
 
 
 def namensform_pruefen(basis):
@@ -1979,10 +1979,10 @@ def befehl_saeubern(basis, schreiben):
 def befehl_abspielen(basis, nummer):
     alle = dict((n, p) for n, _, p in patches(basis))
     if nummer not in alle:
-        raise SystemExit("Fehler: Patch%d gibt es nicht." % nummer)
+        raise SystemExit(T("Fehler: Patch%d gibt es nicht.") % nummer)
     w = phrase_wav(alle[nummer])
     if not w:
-        raise SystemExit("Fehler: Patch%d hat keine WAV." % nummer)
+        raise SystemExit(T("Fehler: Patch%d hat keine WAV.") % nummer)
     print(T("  Spielt \"%s\" (%s) … (Strg+C hält an)")
           % (patch_name(alle[nummer]), sekunden(wav_info(w)[0])))
     griff = abspielen_datei(w)
@@ -2484,6 +2484,47 @@ TEXTE = {
         "    %r": "      %r",
         "JamMan Solo XT": "  JamMan Solo XT",
         "Keine Karte gefunden": "No card found",
+        "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "No player found (aplay, paplay, mpv or ffplay).",
+        "Fehler: im Protokoll stehen keine Einträge.": "Error: the protocol has no entries.",
+        "Fehler: Datei ließ sich nicht umwandeln.": "Error: the file could not be converted.",
+        "Fehler: kein vollständiger Patch als Vorlage gefunden.": "Error: no complete patch found to use as a template.",
+        "Fehler: nichts angegeben (--stopp, --rhythmus, --wiedergabe, --name oder --fade).": "Error: nothing given (--stopp, --rhythmus, --wiedergabe, --name or --fade).",
+        "Fehler: '%s' ist keine lesbare Audiodatei.": "Error: '%s' is not a readable audio file.",
+        "Fehler: --teile N oder --laenge SEKUNDEN angeben.": "Error: give --teile N or --laenge SEKUNDEN.",
+        "Fehler: %.1f Minuten pro Teil sind zu lang (Grenze %d Minuten).": "Error: %.1f minutes per part is too long (limit %d minutes).",
+        "Fehler: '%s' gibt es nicht.": "Error: '%s' does not exist.",
+        "Fehler: '%s' ist keine lesbare Audiodatei.%s": "Error: '%s' is not a readable audio file.%s",
+        "Fehler: '%s' liegt schon vor.": "Error: '%s' already exists.",
+        "Fehler: Die Datei ließ sich nicht kürzen.": "Error: the file could not be shortened.",
+        "Fehler: Die Umwandlung hat keine hörbare Aufnahme\n  ergeben (nur Stille). Datei prüfen: %s": "Error: the conversion produced no audible recording\n  (silence only). Check the file: %s",
+        "Fehler: Patch%d gibt es nicht.": "Error: patch %d does not exist.",
+        "Fehler: Die Aufnahme ließ sich nicht ausblenden (kein 16-Bit-WAV?).": "Error: the recording could not be faded (not a 16-bit WAV?).",
+        "Fehler: '%s' ist nicht eingelegt.": "Error: '%s' is not inserted.",
+        "Fehler beim Auswerfen: %s": "Error while ejecting: %s",
+        "Fehler: Patch%d hat keine WAV.": "Error: patch %d has no WAV.",
+        "Fehler: Sicherungsordner '%s' gibt es nicht.": "Error: backup folder '%s' does not exist.",
+        "Fehler: in '%s' liegen keine Patch-Ordner.": "Error: '%s' contains no patch folders.",
+        "Fehler: keine Sicherung mit einer Aufnahme für Patch%d in '%s'.\n  Fade-Sicherungen heißen Sicherung_<Datum>_vor_fade.": "Error: no backup with a recording for patch %d in '%s'.\n  Fade backups are called Sicherung_<date>_vor_fade.",
+        "Fehler: Platz %d ist belegt (%s).\n  Zum Tauschen:  tauschen --patch %d --mit %d": "Error: slot %d is taken (%s).\n  To swap:  tauschen --patch %d --mit %d",
+        "Fehler: Nummern müssen zwischen 1 und %d liegen.": "Error: numbers must be between 1 and %d.",
+        "Fehler: '%s' ist ein Ordner, keine Datei.": "Error: '%s' is a folder, not a file.",
+        "Fehler: '%s' ist kein Pegelprotokoll (keine lesbare Textdatei).": "Error: '%s' is not a level protocol (no readable text file).",
+        "Fehler: '%s' darf nicht gelesen werden.": "Error: '%s' may not be read.",
+        "Fehler: '%s' lässt sich nicht lesen: %s": "Error: '%s' cannot be read: %s",
+        "Fehler beim Umwandeln. Die Datei hat %d Hz / %d Kanal/Kanäle;\n  nötig sind 44100 Hz und 2 Kanäle. Bitte vorher umwandeln oder\n  ffmpeg installieren.": "Error while converting. The file has %d Hz / %d channel(s);\n  44100 Hz and 2 channels are needed. Convert it first or\n  install ffmpeg.",
+        "Fehler: '%s' lässt sich nicht schreiben.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "Error: '%s' cannot be written.\n  Choose another folder:  --sicherung <path>",
+        "Fehler: Patch%d hat keine phrase.wav.": "Error: patch %d has no phrase.wav.",
+        "Fehler: Der Pegel ließ sich nicht ändern.": "Error: the level could not be changed.",
+        "Fehler: in '%s' darf nicht geschrieben werden.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "Error: '%s' may not be written to.\n  Choose another folder:  --sicherung <path>",
+        "Fehler: Teil %d ließ sich nicht schneiden.": "Error: part %d could not be cut.",
+        "Fehler: Die Datei ist %.1f Minuten lang.\n  Der JamMan Solo XT nimmt höchstens %d Minuten pro Loop an\n  (Handbuch, Seite 60: \"Max. Individual Loop Time: 10 minutes\").\n  Längere Loops erscheinen auf der Karte, werden vom Pedal aber\n  nicht erkannt - und können dabei verschwinden.\n\n  So geht es weiter:\n    --kuerzen            auf 9:59 kürzen (harter Schnitt am Ende,\n                         12 ms ausgeblendet, damit es nicht knackt)\n    --laenge 480         auf 8:00 kürzen\n    --trotzdem           unverändert schreiben (zum Ausprobieren)": "Error: the file is %.1f minutes long.\n  The JamMan Solo XT takes at most %d minutes per loop\n  (manual, page 60: \"Max. Individual Loop Time: 10 minutes\").\n  Longer loops appear on the card but the pedal does not\n  recognise them - and they can disappear in the process.\n\n  What you can do:\n    --kuerzen            cut to 9:59 (hard cut at the end,\n                         12 ms faded so it does not click)\n    --laenge 480         cut to 8:00\n    --trotzdem           write it unchanged (for trying it out)",
+        "Fehler: --wav fehlt.": "Error: --wav missing.",
+        "Fehler: --patch fehlt.": "Error: --patch missing.",
+        "Fehler: --protokoll fehlt.": "Error: --protokoll missing.",
+        "Fehler: --patch fehlt (oder --alle angeben).": "Error: --patch missing (or give --alle).",
+        "Fehler: --patch und --auf fehlen.": "Error: --patch and --auf missing.",
+        "Fehler: --patch und --mit fehlen.": "Error: --patch and --mit missing.",
+        "Fehler: --patch und --nach fehlen.": "Error: --patch and --nach missing.",
         "Neue Fassung verfügbar": "New version available",
         "Es gibt eine neuere Fassung: %s. Sie benutzen %s.":
             "There is a newer version: %s. You are using %s.",
@@ -2723,6 +2764,47 @@ TEXTE = {
         'Zuordnung liegt in: %s': 'Correspondance dans : %s',
         'Betroffene Einträge (erste drei): %s': 'Entrées concernées (trois premières) : %s',
         'Keine Karte gefunden unter %s.': 'Aucune carte trouvée sous %s.',
+        "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "Aucun lecteur trouvé (aplay, paplay, mpv ou ffplay).",
+        "Fehler: im Protokoll stehen keine Einträge.": "Erreur : le protocole ne contient aucune entrée.",
+        "Fehler: Datei ließ sich nicht umwandeln.": "Erreur : le fichier n'a pas pu être converti.",
+        "Fehler: kein vollständiger Patch als Vorlage gefunden.": "Erreur : aucun patch complet trouvé comme modèle.",
+        "Fehler: nichts angegeben (--stopp, --rhythmus, --wiedergabe, --name oder --fade).": "Erreur : rien d'indiqué (--stopp, --rhythmus, --wiedergabe, --name ou --fade).",
+        "Fehler: '%s' ist keine lesbare Audiodatei.": "Erreur : '%s' n'est pas un fichier audio lisible.",
+        "Fehler: --teile N oder --laenge SEKUNDEN angeben.": "Erreur : indiquer --teile N ou --laenge SECONDES.",
+        "Fehler: %.1f Minuten pro Teil sind zu lang (Grenze %d Minuten).": "Erreur : %.1f minutes par partie, c'est trop long (limite %d minutes).",
+        "Fehler: '%s' gibt es nicht.": "Erreur : '%s' n'existe pas.",
+        "Fehler: '%s' ist keine lesbare Audiodatei.%s": "Erreur : '%s' n'est pas un fichier audio lisible.%s",
+        "Fehler: '%s' liegt schon vor.": "Erreur : '%s' existe déjà.",
+        "Fehler: Die Datei ließ sich nicht kürzen.": "Erreur : le fichier n'a pas pu être raccourci.",
+        "Fehler: Die Umwandlung hat keine hörbare Aufnahme\n  ergeben (nur Stille). Datei prüfen: %s": "Erreur : la conversion n'a produit aucun son audible\n  (silence seulement). Vérifier le fichier : %s",
+        "Fehler: Patch%d gibt es nicht.": "Erreur : le patch %d n'existe pas.",
+        "Fehler: Die Aufnahme ließ sich nicht ausblenden (kein 16-Bit-WAV?).": "Erreur : l'enregistrement n'a pas pu être fondu (pas un WAV 16 bits ?).",
+        "Fehler: '%s' ist nicht eingelegt.": "Erreur : '%s' n'est pas insérée.",
+        "Fehler beim Auswerfen: %s": "Erreur lors de l'éjection : %s",
+        "Fehler: Patch%d hat keine WAV.": "Erreur : le patch %d n'a pas de WAV.",
+        "Fehler: Sicherungsordner '%s' gibt es nicht.": "Erreur : le dossier de sauvegarde '%s' n'existe pas.",
+        "Fehler: in '%s' liegen keine Patch-Ordner.": "Erreur : '%s' ne contient aucun dossier de patch.",
+        "Fehler: keine Sicherung mit einer Aufnahme für Patch%d in '%s'.\n  Fade-Sicherungen heißen Sicherung_<Datum>_vor_fade.": "Erreur : aucune sauvegarde avec un enregistrement pour le patch %d dans '%s'.\n  Les sauvegardes de fondu s'appellent Sicherung_<date>_vor_fade.",
+        "Fehler: Platz %d ist belegt (%s).\n  Zum Tauschen:  tauschen --patch %d --mit %d": "Erreur : l'emplacement %d est occupé (%s).\n  Pour échanger :  tauschen --patch %d --mit %d",
+        "Fehler: Nummern müssen zwischen 1 und %d liegen.": "Erreur : les numéros doivent être entre 1 et %d.",
+        "Fehler: '%s' ist ein Ordner, keine Datei.": "Erreur : '%s' est un dossier, pas un fichier.",
+        "Fehler: '%s' ist kein Pegelprotokoll (keine lesbare Textdatei).": "Erreur : '%s' n'est pas un protocole de niveau (pas de fichier texte lisible).",
+        "Fehler: '%s' darf nicht gelesen werden.": "Erreur : '%s' ne doit pas être lu.",
+        "Fehler: '%s' lässt sich nicht lesen: %s": "Erreur : '%s' est illisible : %s",
+        "Fehler beim Umwandeln. Die Datei hat %d Hz / %d Kanal/Kanäle;\n  nötig sind 44100 Hz und 2 Kanäle. Bitte vorher umwandeln oder\n  ffmpeg installieren.": "Erreur lors de la conversion. Le fichier a %d Hz / %d canal(aux) ;\n  44100 Hz et 2 canaux sont nécessaires. Le convertir d'abord ou\n  installer ffmpeg.",
+        "Fehler: '%s' lässt sich nicht schreiben.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "Erreur : '%s' ne peut pas être écrit.\n  Choisir un autre dossier :  --sicherung <chemin>",
+        "Fehler: Patch%d hat keine phrase.wav.": "Erreur : le patch %d n'a pas de phrase.wav.",
+        "Fehler: Der Pegel ließ sich nicht ändern.": "Erreur : le niveau n'a pas pu être modifié.",
+        "Fehler: in '%s' darf nicht geschrieben werden.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "Erreur : '%s' ne doit pas être écrit.\n  Choisir un autre dossier :  --sicherung <chemin>",
+        "Fehler: Teil %d ließ sich nicht schneiden.": "Erreur : la partie %d n'a pas pu être coupée.",
+        "Fehler: Die Datei ist %.1f Minuten lang.\n  Der JamMan Solo XT nimmt höchstens %d Minuten pro Loop an\n  (Handbuch, Seite 60: \"Max. Individual Loop Time: 10 minutes\").\n  Längere Loops erscheinen auf der Karte, werden vom Pedal aber\n  nicht erkannt - und können dabei verschwinden.\n\n  So geht es weiter:\n    --kuerzen            auf 9:59 kürzen (harter Schnitt am Ende,\n                         12 ms ausgeblendet, damit es nicht knackt)\n    --laenge 480         auf 8:00 kürzen\n    --trotzdem           unverändert schreiben (zum Ausprobieren)": "Erreur : le fichier dure %.1f minutes.\n  Le JamMan Solo XT accepte au plus %d minutes par boucle\n  (manuel, page 60 : « Max. Individual Loop Time: 10 minutes »).\n  Les boucles plus longues apparaissent sur la carte mais la pédale\n  ne les reconnaît pas - et elles peuvent disparaître.\n\n  Solutions :\n    --kuerzen            réduire à 9:59 (coupe nette à la fin,\n                         12 ms fondues pour éviter le clic)\n    --laenge 480         réduire à 8:00\n    --trotzdem           écrire inchangé (pour essayer)",
+        "Fehler: --wav fehlt.": "Erreur : --wav manque.",
+        "Fehler: --patch fehlt.": "Erreur : --patch manque.",
+        "Fehler: --protokoll fehlt.": "Erreur : --protokoll manque.",
+        "Fehler: --patch fehlt (oder --alle angeben).": "Erreur : --patch manque (ou donner --alle).",
+        "Fehler: --patch und --auf fehlen.": "Erreur : --patch et --auf manquent.",
+        "Fehler: --patch und --mit fehlen.": "Erreur : --patch et --mit manquent.",
+        "Fehler: --patch und --nach fehlen.": "Erreur : --patch et --nach manquent.",
         "  Hinweis: Pegelprotokoll konnte nicht geschrieben werden.": "    Remarque : le protocole de niveau n'a pas pu être écrit.",
         "  Protokoll: %s": "    Protocole : %s",
         "  %d Einträge": "    %d entrées",
@@ -3134,6 +3216,47 @@ TEXTE = {
         'Zuordnung liegt in: %s': 'La correspondencia está en: %s',
         'Betroffene Einträge (erste drei): %s': 'Entradas afectadas (las tres primeras): %s',
         'Keine Karte gefunden unter %s.': 'No se encontró tarjeta en %s.',
+        "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "No se encontró ningún reproductor (aplay, paplay, mpv o ffplay).",
+        "Fehler: im Protokoll stehen keine Einträge.": "Error: el protocolo no tiene entradas.",
+        "Fehler: Datei ließ sich nicht umwandeln.": "Error: el archivo no se pudo convertir.",
+        "Fehler: kein vollständiger Patch als Vorlage gefunden.": "Error: no se encontró ningún patch completo como plantilla.",
+        "Fehler: nichts angegeben (--stopp, --rhythmus, --wiedergabe, --name oder --fade).": "Error: no se indicó nada (--stopp, --rhythmus, --wiedergabe, --name o --fade).",
+        "Fehler: '%s' ist keine lesbare Audiodatei.": "Error: '%s' no es un archivo de audio legible.",
+        "Fehler: --teile N oder --laenge SEKUNDEN angeben.": "Error: indique --teile N o --laenge SEGUNDOS.",
+        "Fehler: %.1f Minuten pro Teil sind zu lang (Grenze %d Minuten).": "Error: %.1f minutos por parte es demasiado (límite %d minutos).",
+        "Fehler: '%s' gibt es nicht.": "Error: '%s' no existe.",
+        "Fehler: '%s' ist keine lesbare Audiodatei.%s": "Error: '%s' no es un archivo de audio legible.%s",
+        "Fehler: '%s' liegt schon vor.": "Error: '%s' ya existe.",
+        "Fehler: Die Datei ließ sich nicht kürzen.": "Error: el archivo no se pudo acortar.",
+        "Fehler: Die Umwandlung hat keine hörbare Aufnahme\n  ergeben (nur Stille). Datei prüfen: %s": "Error: la conversión no produjo ninguna grabación audible\n  (solo silencio). Revisar el archivo: %s",
+        "Fehler: Patch%d gibt es nicht.": "Error: el patch %d no existe.",
+        "Fehler: Die Aufnahme ließ sich nicht ausblenden (kein 16-Bit-WAV?).": "Error: la grabación no se pudo atenuar (¿no es un WAV de 16 bits?).",
+        "Fehler: '%s' ist nicht eingelegt.": "Error: '%s' no está insertada.",
+        "Fehler beim Auswerfen: %s": "Error al expulsar: %s",
+        "Fehler: Patch%d hat keine WAV.": "Error: el patch %d no tiene WAV.",
+        "Fehler: Sicherungsordner '%s' gibt es nicht.": "Error: la carpeta de copia '%s' no existe.",
+        "Fehler: in '%s' liegen keine Patch-Ordner.": "Error: '%s' no contiene carpetas de patch.",
+        "Fehler: keine Sicherung mit einer Aufnahme für Patch%d in '%s'.\n  Fade-Sicherungen heißen Sicherung_<Datum>_vor_fade.": "Error: no hay copia con una grabación para el patch %d en '%s'.\n  Las copias de fundido se llaman Sicherung_<fecha>_vor_fade.",
+        "Fehler: Platz %d ist belegt (%s).\n  Zum Tauschen:  tauschen --patch %d --mit %d": "Error: la plaza %d está ocupada (%s).\n  Para intercambiar:  tauschen --patch %d --mit %d",
+        "Fehler: Nummern müssen zwischen 1 und %d liegen.": "Error: los números deben estar entre 1 y %d.",
+        "Fehler: '%s' ist ein Ordner, keine Datei.": "Error: '%s' es una carpeta, no un archivo.",
+        "Fehler: '%s' ist kein Pegelprotokoll (keine lesbare Textdatei).": "Error: '%s' no es un protocolo de nivel (no es un archivo de texto legible).",
+        "Fehler: '%s' darf nicht gelesen werden.": "Error: '%s' no se puede leer.",
+        "Fehler: '%s' lässt sich nicht lesen: %s": "Error: '%s' no se puede leer: %s",
+        "Fehler beim Umwandeln. Die Datei hat %d Hz / %d Kanal/Kanäle;\n  nötig sind 44100 Hz und 2 Kanäle. Bitte vorher umwandeln oder\n  ffmpeg installieren.": "Error al convertir. El archivo tiene %d Hz / %d canal(es);\n  se necesitan 44100 Hz y 2 canales. Convertirlo antes o\n  instalar ffmpeg.",
+        "Fehler: '%s' lässt sich nicht schreiben.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "Error: '%s' no se puede escribir.\n  Elija otra carpeta:  --sicherung <ruta>",
+        "Fehler: Patch%d hat keine phrase.wav.": "Error: el patch %d no tiene phrase.wav.",
+        "Fehler: Der Pegel ließ sich nicht ändern.": "Error: el nivel no se pudo cambiar.",
+        "Fehler: in '%s' darf nicht geschrieben werden.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "Error: en '%s' no se puede escribir.\n  Elija otra carpeta:  --sicherung <ruta>",
+        "Fehler: Teil %d ließ sich nicht schneiden.": "Error: la parte %d no se pudo cortar.",
+        "Fehler: Die Datei ist %.1f Minuten lang.\n  Der JamMan Solo XT nimmt höchstens %d Minuten pro Loop an\n  (Handbuch, Seite 60: \"Max. Individual Loop Time: 10 minutes\").\n  Längere Loops erscheinen auf der Karte, werden vom Pedal aber\n  nicht erkannt - und können dabei verschwinden.\n\n  So geht es weiter:\n    --kuerzen            auf 9:59 kürzen (harter Schnitt am Ende,\n                         12 ms ausgeblendet, damit es nicht knackt)\n    --laenge 480         auf 8:00 kürzen\n    --trotzdem           unverändert schreiben (zum Ausprobieren)": "Error: el archivo dura %.1f minutos.\n  El JamMan Solo XT acepta como máximo %d minutos por loop\n  (manual, página 60: \"Max. Individual Loop Time: 10 minutes\").\n  Los loops más largos aparecen en la tarjeta, pero el pedal no\n  los reconoce - y pueden desaparecer.\n\n  Qué se puede hacer:\n    --kuerzen            acortar a 9:59 (corte duro al final,\n                         12 ms atenuados para que no chasquee)\n    --laenge 480         acortar a 8:00\n    --trotzdem           escribir sin cambios (para probar)",
+        "Fehler: --wav fehlt.": "Error: falta --wav.",
+        "Fehler: --patch fehlt.": "Error: falta --patch.",
+        "Fehler: --protokoll fehlt.": "Error: falta --protokoll.",
+        "Fehler: --patch fehlt (oder --alle angeben).": "Error: falta --patch (o indicar --alle).",
+        "Fehler: --patch und --auf fehlen.": "Error: faltan --patch y --auf.",
+        "Fehler: --patch und --mit fehlen.": "Error: faltan --patch y --mit.",
+        "Fehler: --patch und --nach fehlen.": "Error: faltan --patch y --nach.",
         "  Hinweis: Pegelprotokoll konnte nicht geschrieben werden.": "    Nota: no se pudo escribir el protocolo de nivel.",
         "  Protokoll: %s": "    Protocolo: %s",
         "  %d Einträge": "    %d entradas",
@@ -3545,6 +3668,47 @@ TEXTE = {
         'Zuordnung liegt in: %s': '对应关系位于：%s',
         'Betroffene Einträge (erste drei): %s': '受影响的条目（前三个）：%s',
         'Keine Karte gefunden unter %s.': '在 %s 下未找到存储卡。',
+        "Kein Abspielprogramm gefunden (aplay, paplay, mpv oder ffplay).": "未找到播放程序（aplay、paplay、mpv 或 ffplay）。",
+        "Fehler: im Protokoll stehen keine Einträge.": "错误：记录中没有条目。",
+        "Fehler: Datei ließ sich nicht umwandeln.": "错误：文件无法转换。",
+        "Fehler: kein vollständiger Patch als Vorlage gefunden.": "错误：没有找到可用作模板的完整音色。",
+        "Fehler: nichts angegeben (--stopp, --rhythmus, --wiedergabe, --name oder --fade).": "错误：没有给出任何参数（--stopp、--rhythmus、--wiedergabe、--name 或 --fade）。",
+        "Fehler: '%s' ist keine lesbare Audiodatei.": "错误：'%s' 不是可读的音频文件。",
+        "Fehler: --teile N oder --laenge SEKUNDEN angeben.": "错误：请给出 --teile N 或 --laenge 秒数。",
+        "Fehler: %.1f Minuten pro Teil sind zu lang (Grenze %d Minuten).": "错误：每段 %.1f 分钟太长（上限 %d 分钟）。",
+        "Fehler: '%s' gibt es nicht.": "错误：'%s' 不存在。",
+        "Fehler: '%s' ist keine lesbare Audiodatei.%s": "错误：'%s' 不是可读的音频文件。%s",
+        "Fehler: '%s' liegt schon vor.": "错误：'%s' 已存在。",
+        "Fehler: Die Datei ließ sich nicht kürzen.": "错误：文件无法截短。",
+        "Fehler: Die Umwandlung hat keine hörbare Aufnahme\n  ergeben (nur Stille). Datei prüfen: %s": "错误：转换后没有可听的内容\n  （只有静音）。请检查文件：%s",
+        "Fehler: Patch%d gibt es nicht.": "错误：音色 %d 不存在。",
+        "Fehler: Die Aufnahme ließ sich nicht ausblenden (kein 16-Bit-WAV?).": "错误：录音无法淡出（不是 16 位 WAV？）。",
+        "Fehler: '%s' ist nicht eingelegt.": "错误：'%s' 未插入。",
+        "Fehler beim Auswerfen: %s": "弹出时出错：%s",
+        "Fehler: Patch%d hat keine WAV.": "错误：音色 %d 没有 WAV。",
+        "Fehler: Sicherungsordner '%s' gibt es nicht.": "错误：备份文件夹 '%s' 不存在。",
+        "Fehler: in '%s' liegen keine Patch-Ordner.": "错误：'%s' 中没有音色文件夹。",
+        "Fehler: keine Sicherung mit einer Aufnahme für Patch%d in '%s'.\n  Fade-Sicherungen heißen Sicherung_<Datum>_vor_fade.": "错误：'%s' 中没有音色 %d 的录音备份。\n  淡出备份名为 Sicherung_<日期>_vor_fade。",
+        "Fehler: Platz %d ist belegt (%s).\n  Zum Tauschen:  tauschen --patch %d --mit %d": "错误：位置 %d 已占用（%s）。\n  要交换：  tauschen --patch %d --mit %d",
+        "Fehler: Nummern müssen zwischen 1 und %d liegen.": "错误：编号必须在 1 到 %d 之间。",
+        "Fehler: '%s' ist ein Ordner, keine Datei.": "错误：'%s' 是文件夹，不是文件。",
+        "Fehler: '%s' ist kein Pegelprotokoll (keine lesbare Textdatei).": "错误：'%s' 不是电平记录（不是可读的文本文件）。",
+        "Fehler: '%s' darf nicht gelesen werden.": "错误：'%s' 不允许读取。",
+        "Fehler: '%s' lässt sich nicht lesen: %s": "错误：'%s' 无法读取：%s",
+        "Fehler beim Umwandeln. Die Datei hat %d Hz / %d Kanal/Kanäle;\n  nötig sind 44100 Hz und 2 Kanäle. Bitte vorher umwandeln oder\n  ffmpeg installieren.": "转换时出错。文件是 %d Hz / %d 声道；\n  需要 44100 Hz 和 2 声道。请先转换，或\n  安装 ffmpeg。",
+        "Fehler: '%s' lässt sich nicht schreiben.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "错误：'%s' 无法写入。\n  请换一个文件夹：  --sicherung <路径>",
+        "Fehler: Patch%d hat keine phrase.wav.": "错误：音色 %d 没有 phrase.wav。",
+        "Fehler: Der Pegel ließ sich nicht ändern.": "错误：电平无法更改。",
+        "Fehler: in '%s' darf nicht geschrieben werden.\n  Nimm einen anderen Ordner:  --sicherung <pfad>": "错误：'%s' 不允许写入。\n  请换一个文件夹：  --sicherung <路径>",
+        "Fehler: Teil %d ließ sich nicht schneiden.": "错误：第 %d 段无法剪切。",
+        "Fehler: Die Datei ist %.1f Minuten lang.\n  Der JamMan Solo XT nimmt höchstens %d Minuten pro Loop an\n  (Handbuch, Seite 60: \"Max. Individual Loop Time: 10 minutes\").\n  Längere Loops erscheinen auf der Karte, werden vom Pedal aber\n  nicht erkannt - und können dabei verschwinden.\n\n  So geht es weiter:\n    --kuerzen            auf 9:59 kürzen (harter Schnitt am Ende,\n                         12 ms ausgeblendet, damit es nicht knackt)\n    --laenge 480         auf 8:00 kürzen\n    --trotzdem           unverändert schreiben (zum Ausprobieren)": "错误：文件长 %.1f 分钟。\n  JamMan Solo XT 每个循环最多接受 %d 分钟\n  （手册第 60 页：\"Max. Individual Loop Time: 10 minutes\"）。\n  更长的循环会出现在卡上，但踏板不识别 -\n  并可能在过程中消失。\n\n  可以这样做：\n    --kuerzen            截到 9:59（结尾硬切，\n                         12 毫秒淡出以免爆音）\n    --laenge 480         截到 8:00\n    --trotzdem           原样写入（供试用）",
+        "Fehler: --wav fehlt.": "错误：缺少 --wav。",
+        "Fehler: --patch fehlt.": "错误：缺少 --patch。",
+        "Fehler: --protokoll fehlt.": "错误：缺少 --protokoll。",
+        "Fehler: --patch fehlt (oder --alle angeben).": "错误：缺少 --patch（或给出 --alle）。",
+        "Fehler: --patch und --auf fehlen.": "错误：缺少 --patch 和 --auf。",
+        "Fehler: --patch und --mit fehlen.": "错误：缺少 --patch 和 --mit。",
+        "Fehler: --patch und --nach fehlen.": "错误：缺少 --patch 和 --nach。",
         "  Hinweis: Pegelprotokoll konnte nicht geschrieben werden.": "    提示：电平记录未能写入。",
         "  Protokoll: %s": "    记录：%s",
         "  %d Einträge": "    %d 条",
@@ -3925,8 +4089,8 @@ def sicher_ablegen(basis, patch_pfade, grund, wurzel=None):
     try:
         os.makedirs(ziel, exist_ok=True)
     except PermissionError:
-        raise SystemExit("Fehler: in '%s' darf nicht geschrieben werden.\n"
-                         "  Nimm einen anderen Ordner:  --sicherung <pfad>" % ordner)
+        raise SystemExit(T("Fehler: in '%s' darf nicht geschrieben werden.\n"
+                         "  Nimm einen anderen Ordner:  --sicherung <pfad>") % ordner)
     for pfad in patch_pfade:
         shutil.copytree(pfad, os.path.join(ziel, os.path.basename(pfad)),
                         dirs_exist_ok=True)
@@ -3964,7 +4128,7 @@ def befehl_alle_normieren(basis, schreiben, ziel_rms_db=-18.0, grenze_db=-1.0,
     """
     alle = patches(basis)
     if not alle:
-        raise SystemExit("Keine Patches auf der Karte.")
+        raise SystemExit(T("Keine Patches auf der Karte."))
     print(T("  Ziel: %.1f dB Lautheit (RMS), Spitze höchstens %.1f dB")
           % (ziel_rms_db, grenze_db))
     print(T("  Patches: %d") % len(alle))
@@ -4028,11 +4192,11 @@ def befehl_zuruecknehmen_alle(basis, aus, schreiben, wurzel=None):
     """
     quelle = os.path.expanduser(aus or "")
     if not os.path.isdir(quelle):
-        raise SystemExit("Fehler: Sicherungsordner '%s' gibt es nicht." % quelle)
+        raise SystemExit(T("Fehler: Sicherungsordner '%s' gibt es nicht.") % quelle)
     vorhanden = sorted(d for d in os.listdir(quelle)
                        if re.fullmatch(r"Patch\d+", d))
     if not vorhanden:
-        raise SystemExit("Fehler: in '%s' liegen keine Patch-Ordner." % quelle)
+        raise SystemExit(T("Fehler: in '%s' liegen keine Patch-Ordner.") % quelle)
     auf_der_karte = [name for _, name, _ in patches(basis)]
     print(T("  Sicherung: %s") % quelle)
     print(T("  Patches in der Sicherung: %d") % len(vorhanden))
@@ -4061,16 +4225,16 @@ def befehl_zuruecknehmen(basis, nummer, schreiben, wurzel=None, aus=None):
     """
     alle = dict((n, pf) for n, _, pf in patches(basis))
     if nummer not in alle:
-        raise SystemExit("Fehler: Patch%d gibt es nicht." % nummer)
+        raise SystemExit(T("Fehler: Patch%d gibt es nicht.") % nummer)
     ordner = os.path.expanduser(aus or wurzel or SICHERUNG_WURZEL)
     if not os.path.isdir(ordner):
-        raise SystemExit("Fehler: Sicherungsordner '%s' gibt es nicht." % ordner)
+        raise SystemExit(T("Fehler: Sicherungsordner '%s' gibt es nicht.") % ordner)
 
     kandidaten = zuruecknehmen_kandidaten(ordner, nummer)
     if not kandidaten:
-        raise SystemExit("Fehler: keine Sicherung mit einer Aufnahme für "
+        raise SystemExit(T("Fehler: keine Sicherung mit einer Aufnahme für "
                          "Patch%d in '%s'.\n"
-                         "  Fade-Sicherungen heißen Sicherung_<Datum>_vor_fade."
+                         "  Fade-Sicherungen heißen Sicherung_<Datum>_vor_fade.")
                          % (nummer, ordner))
     quelle = kandidaten[0]
     print(T("  Patch:      %s  (%s)") % (os.path.basename(alle[nummer]), patch_name(alle[nummer])))
@@ -4101,10 +4265,10 @@ def befehl_platzieren(basis, von, auf, schreiben, wurzel=None):
     """
     alle = dict((n, pf) for n, _, pf in patches(basis))
     if von not in alle:
-        raise SystemExit("Fehler: Patch%d gibt es nicht." % von)
+        raise SystemExit(T("Fehler: Patch%d gibt es nicht.") % von)
     if auf in alle and auf != von:
-        raise SystemExit("Fehler: Platz %d ist belegt (%s).\n"
-                         "  Zum Tauschen:  tauschen --patch %d --mit %d"
+        raise SystemExit(T("Fehler: Platz %d ist belegt (%s).\n"
+                         "  Zum Tauschen:  tauschen --patch %d --mit %d")
                          % (auf, patch_name(alle[auf]), von, auf))
     pfad = alle[von]
     alter_name = os.path.basename(pfad)
@@ -4127,7 +4291,7 @@ def befehl_tauschen(basis, a, b, schreiben, wurzel=None, kopie=False):
     alle = dict((n, pf) for n, _, pf in patches(basis))
     if a not in alle or b not in alle:
         fehlend = a if a not in alle else b
-        raise SystemExit("Fehler: Patch%d gibt es nicht." % fehlend)
+        raise SystemExit(T("Fehler: Patch%d gibt es nicht.") % fehlend)
     if a == b:
         print(T("  Nichts zu tun."))
         return
@@ -4156,7 +4320,7 @@ def befehl_tauschen(basis, a, b, schreiben, wurzel=None, kopie=False):
 def befehl_loeschen(basis, nummer, schreiben, wurzel=None):
     alle = dict((n, pf) for n, _, pf in patches(basis))
     if nummer not in alle:
-        raise SystemExit("Fehler: Patch%d gibt es nicht." % nummer)
+        raise SystemExit(T("Fehler: Patch%d gibt es nicht.") % nummer)
     pfad = alle[nummer]
     print(T("  Wird gelöscht: %s  (%s)") % (os.path.basename(pfad), patch_name(pfad)))
     print(T("  Vorher wird er gesichert nach: %s") % os.path.expanduser(wurzel or SICHERUNG_WURZEL))
@@ -4181,15 +4345,15 @@ def sicherung_der_namen(basis, grund, wurzel=None):
     try:
         os.makedirs(ordner, exist_ok=True)
     except PermissionError:
-        raise SystemExit("Fehler: in '%s' darf nicht geschrieben werden.\n"
-                         "  Nimm einen anderen Ordner:  --sicherung <pfad>" % ordner)
+        raise SystemExit(T("Fehler: in '%s' darf nicht geschrieben werden.\n"
+                         "  Nimm einen anderen Ordner:  --sicherung <pfad>") % ordner)
     name = "Umbenennung_%s_%s.txt" % (datetime.now().strftime("%Y-%m-%d_%H-%M-%S"), grund)
     ziel = freier_name(os.path.join(ordner, name))
     try:
         f = open(ziel, "w", encoding="utf-8")
     except OSError:
-        raise SystemExit("Fehler: '%s' lässt sich nicht schreiben.\n"
-                         "  Nimm einen anderen Ordner:  --sicherung <pfad>" % ziel)
+        raise SystemExit(T("Fehler: '%s' lässt sich nicht schreiben.\n"
+                         "  Nimm einen anderen Ordner:  --sicherung <pfad>") % ziel)
     with f:
         f.write("Reihenfolge vor der Änderung (%s)\n" % datetime.now().isoformat(timespec="seconds"))
         f.write("Ordner\tName\tKennung\n")
@@ -4211,7 +4375,7 @@ def befehl_verschieben(basis, von, nach, schreiben, wurzel=None, kopie=True):
     reihe = [pf for _, _, pf in patches(basis)]
     namen = [os.path.basename(p) for p in reihe]
     if not (1 <= von <= len(reihe)) or not (1 <= nach <= len(reihe)):
-        raise SystemExit("Fehler: Nummern müssen zwischen 1 und %d liegen." % len(reihe))
+        raise SystemExit(T("Fehler: Nummern müssen zwischen 1 und %d liegen." )% len(reihe))
     if von == nach:
         print(T("  Nichts zu tun."))
         return
@@ -6373,29 +6537,29 @@ def main():
         befehl_sichern(basis, a.ziel, a.schreiben)
     elif a.befehl == "aufspielen":
         if not a.wav:
-            raise SystemExit("Fehler: --wav fehlt.")
+            raise SystemExit(T("Fehler: --wav fehlt."))
         befehl_aufspielen(basis, a.wav, a.name, a.schreiben, a.stopp, a.rhythmus,
                           a.wiedergabe, a.fade, a.gain, a.normieren,
                           not a.ohne_begrenzung, a.trotzdem,
                           a.kuerzen, a.laenge)
     elif a.befehl == "abspielen":
         if not a.patch:
-            raise SystemExit("Fehler: --patch fehlt.")
+            raise SystemExit(T("Fehler: --patch fehlt."))
         befehl_abspielen(basis, a.patch)
     elif a.befehl == "loeschen":
         if not a.patch:
-            raise SystemExit("Fehler: --patch fehlt.")
+            raise SystemExit(T("Fehler: --patch fehlt."))
         befehl_loeschen(basis, a.patch, a.schreiben, a.sicherung)
     elif a.befehl == "teilen":
         if not a.wav:
-            raise SystemExit("Fehler: --wav fehlt.")
+            raise SystemExit(T("Fehler: --wav fehlt."))
         befehl_teilen(basis, a.wav, a.name or os.path.splitext(os.path.basename(a.wav))[0],
                       a.schreiben, a.teile, a.laenge, a.sicherung,
                       a.stopp, a.wiedergabe, sinnvoll=not a.einfach,
                       ohne_pause=not a.mit_pause)
     elif a.befehl == "pegel-umkehren":
         if not a.protokoll:
-            raise SystemExit("Fehler: --protokoll fehlt.")
+            raise SystemExit(T("Fehler: --protokoll fehlt."))
         befehl_pegel_umkehren(basis, os.path.expanduser(a.protokoll),
                               a.schreiben, a.sicherung)
     elif a.befehl == "alle-normieren":
@@ -6405,20 +6569,20 @@ def main():
             befehl_zuruecknehmen_alle(basis, a.aus, a.schreiben, a.sicherung)
         else:
             if not a.patch:
-                raise SystemExit("Fehler: --patch fehlt (oder --alle angeben).")
+                raise SystemExit(T("Fehler: --patch fehlt (oder --alle angeben)."))
             befehl_zuruecknehmen(basis, a.patch, a.schreiben, a.sicherung, a.aus)
     elif a.befehl == "platzieren":
         if not a.patch or not a.auf:
-            raise SystemExit("Fehler: --patch und --auf fehlen.")
+            raise SystemExit(T("Fehler: --patch und --auf fehlen."))
         befehl_platzieren(basis, a.patch, a.auf, a.schreiben, a.sicherung)
     elif a.befehl == "tauschen":
         if not a.patch or not a.mit:
-            raise SystemExit("Fehler: --patch und --mit fehlen.")
+            raise SystemExit(T("Fehler: --patch und --mit fehlen."))
         befehl_tauschen(basis, a.patch, a.mit, a.schreiben, a.sicherung,
                         kopie=not a.keine_kopie)
     elif a.befehl == "aendern":
         if not a.patch:
-            raise SystemExit("Fehler: --patch fehlt.")
+            raise SystemExit(T("Fehler: --patch fehlt."))
         befehl_aendern(basis, a.patch, a.schreiben, a.stopp, a.rhythmus,
                        a.wiedergabe, a.name, a.sicherung, a.fade,
                        a.gain, a.normieren, not a.ohne_begrenzung)
@@ -6426,7 +6590,7 @@ def main():
         befehl_saeubern(basis, a.schreiben)
     elif a.befehl == "verschieben":
         if not a.patch or not a.nach:
-            raise SystemExit("Fehler: --patch und --nach fehlen.")
+            raise SystemExit(T("Fehler: --patch und --nach fehlen."))
         befehl_verschieben(basis, a.patch, a.nach, a.schreiben, a.sicherung,
                            kopie=not a.keine_kopie)
 
