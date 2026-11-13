@@ -18,9 +18,11 @@ to change. The message when no card is found names both folders.
 the patch name) and with a Solo XT card.
 
 **Confirmed on a real pedal (2026-11-13):** the user who reported the
-problem ran 3.102 on his JamMan Stereo under **Ubuntu** and wrote back:
-"Funktioniert, top." Writing to a Stereo card still deserves a full copy of
-the card first — but it is no longer untested ground.
+problem ran 3.102 on his JamMan Stereo under Linux and wrote back:
+"Funktioniert, top." Which distribution he uses was not stated. The author
+tested the tool itself on Ubuntu Studio and Windows 10. Writing to a Stereo
+card still deserves a full copy of the card first — but it is no longer
+untested ground.
 
 ## 3.101 — 2026-11-11
 

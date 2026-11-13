@@ -6,7 +6,7 @@ Linux aus verwalten — ohne JamManager XT.
 Karten des **JamMan Stereo** werden ebenfalls erkannt: gleicher Aufbau,
 nur heißt der Geräteordner `JamManStereo`. Geprüft mit einer nachgebauten
 Stereo-Karte und seit 13.11.2026 **von einem Nutzer an einem echten
-JamMan Stereo unter Ubuntu bestätigt** ("Funktioniert, top.") — trotzdem
+JamMan Stereo (Linux) bestätigt** ("Funktioniert, top.") — trotzdem
 vor dem ersten Schreiben die Karte kopieren.
 
 **Hintergrund:** Das offizielle Programm *JamManager XT* (Version 2.0 von
