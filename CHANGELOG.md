@@ -11,8 +11,9 @@ dialogs) appeared in English on a French, Spanish or Chinese window.
 Second — and larger — 153 German texts were passed through `T()` without
 being in any catalogue: the command line output, the column headers of the
 patch list, the whole self test. A non-German window showed German there.
-All of them are translated into English now; `fr`, `es` and `zh` inherit the
-English text for them until their own translation follows.
+All 153 are translated, and not only into English: French, Spanish and
+Chinese have their own text as well. The four catalogues now hold the same
+411 entries.
 
 Also corrected: the user who confirmed 3.102 on a real JamMan Stereo uses
 **Kubuntu**, not "Linux" in general. CHANGELOG, both READMEs and the landing
