@@ -53,17 +53,30 @@ into the settings file (its path is printed by `jamman.py selbsttest`).
 
 | Command | Effect |
 |---|---|
-| `liste` | list the patches on the card: name, length, WAV format |
-| `abspielen --patch N` | play a patch |
-| `aufspielen --wav FILE` | add a file as a new patch — WAV, AIFF, CAF, MP3, M4A/AAC, FLAC, OGG/Opus; converts to 44.1 kHz / 16 bit / stereo |
-| `aendern --patch N` | change stop mode, loop/single, rhythm or name of an existing patch |
-| `verschieben --patch N --nach M` | move a patch to another slot |
-| `loeschen --patch N` | remove a patch (backup first) |
-| `sichern --ziel DIR` | copy the whole card to the computer |
-| `saeubern` | remove macOS `._*` and `.DS_Store` files from the card |
-| `auswerfen` | unmount / eject the card |
+| `list` | list the patches on the card: name, length, WAV format |
+| `play --patch N` | play a patch |
+| `import --wav FILE` | add a file as a new patch — WAV, AIFF, CAF, MP3, M4A/AAC, FLAC, OGG/Opus; converts to 44.1 kHz / 16 bit / stereo |
+| `change --patch N` | change stop mode, loop/single, rhythm or name of an existing patch |
+| `move --patch N --nach M` | move a patch to another slot |
+| `delete --patch N` | remove a patch (backup first) |
+| `backup --ziel DIR` | copy the whole card to the computer |
+| `clean` | remove macOS `._*` and `.DS_Store` files from the card |
+| `eject` | unmount / eject the card |
 | `gui` | small window (tkinter) |
 | `menu` | text menu — works without tkinter |
+
+**Command names work in English and German** (`list` = `liste`, `import` =
+`aufspielen`, `backup` = `sichern` …). The **options are German** — they are
+older than the translation and were never renamed:
+
+| Option | Meaning |
+|---|---|
+| `--karte PFAD` | the card (default: detected) |
+| `--patch N` | patch number |
+| `--wav DATEI` | the audio file to import |
+| `--ziel ORDNER` | target folder for `backup` |
+| `--nach N` | target slot for `move` |
+| `--schreiben` | really write (without it: dry run) |
 
 **Dry run by default.** Nothing is written unless you add `--schreiben`.
 
