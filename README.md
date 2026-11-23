@@ -149,7 +149,9 @@ patch folders to `~/JamMan-Sicherung` first.
 
 The pedal does not appear as a drive. It speaks a serial protocol
 ("Greenglass", CDC-ACM), and the tool talks to it directly — no driver, no
-JamManager. Button **"Pedal über USB"** opens a window for the pedal's
+JamManager. **That also means the computer does not have to recognise the pedal
+as a drive.** A card reader is still the faster route (about 1.3 MB/s over USB);
+without one, the tool gets you there anyway. Button **"Pedal über USB"** opens a window for the pedal's
 **internal memory** and its **SD card**:
 
 * list the patches with their names, switch between internal memory and card

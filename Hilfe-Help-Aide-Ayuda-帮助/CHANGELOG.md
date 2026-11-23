@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.136.16 — 2026-11-23
+
+### Geändert
+
+- **Der USB-Weg braucht kein Laufwerk — das steht jetzt da.** Andere Werkzeuge für dieselben
+  Pedale schreiben nur die Speicherkarte, weil der Laufwerks-Modus auf neueren Systemen nicht
+  mehr zuverlässig arbeitet. Dieses Werkzeug spricht das Pedal über die serielle Schnittstelle
+  an (Greenglass, CDC-ACM) und ist davon unabhängig. Der Satz steht in beiden READMEs und auf
+  beiden Werkzeugseiten, samt GitHub-Pages-Fassung. Sonst keine Änderung am Programm.
+
 ## 3.136.15 — 2026-11-23
 
 ### Behoben

@@ -138,7 +138,9 @@ eintragen.
 
 Das Pedal erscheint nicht als Laufwerk. Es spricht ein serielles Protokoll
 („Greenglass", CDC-ACM), und das Werkzeug redet direkt damit — kein Treiber,
-kein JamManager. Der Knopf **„Pedal über USB"** öffnet ein Fenster für den
+kein JamManager. **Das heißt auch: der Rechner muß das Pedal nicht als Laufwerk
+erkennen.** Der Kartenleser ist trotzdem der schnellere Weg (etwa 1,3 MB/s über
+USB); wer keinen zur Hand hat, kommt ohne ihn weiter. Der Knopf **„Pedal über USB"** öffnet ein Fenster für den
 **internen Speicher** und die **SD-Karte** des Pedals:
 
 * Patches mit Namen auflisten, zwischen internem Speicher und Karte wechseln
