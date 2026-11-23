@@ -192,6 +192,9 @@ am 17.11.2026 bestätigt. **Lesen und Schreiben über USB sind am 23.11.2026 auc
 Windows geprüft worden:** eine Sekunde Stille auf einen freien Platz gespielt, in der Liste
 gesehen (0:01) und wieder gelöscht. Nötig ist dafür `pyserial` (`pip install pyserial`);
 ohne das Paket meldet das Werkzeug „kein Pedal gefunden", obwohl Windows den Anschluß kennt.
+**Im Paket liegt dafür `pyserial-nachinstallieren.bat`:** doppelklicken, es installiert
+`pyserial`, sagt „Fertig" und wartet auf einen Tastendruck. Wer es lieber im Netz hat:
+<https://www.julius-k.de/tool/pyserial-nachinstallieren.bat>.
 
 **Aktualisieren aus Fassungen bis 3.117:** Die eingebaute Aktualisierung
 findet die neue Aufteilung nicht (sie sucht eine flache `jamman.py` und

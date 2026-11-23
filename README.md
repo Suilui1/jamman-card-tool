@@ -197,6 +197,9 @@ confirmed on 17 Nov 2026. **Reading and writing over USB were tested on Windows 
 23 Nov 2026:** one second of silence written to a free slot, seen in the list (0:01) and
 deleted again. This needs `pyserial` (`pip install pyserial`); without it the tool reports
 "no pedal found" even though Windows knows the port.
+**The package contains `pyserial-nachinstallieren.bat` for this:** double-click it, it
+installs `pyserial`, says "done" and waits for a key press. Online copy:
+<https://www.julius-k.de/tool/pyserial-nachinstallieren.bat>.
 
 **Updating from 3.117 or older:** the built-in update cannot install the new
 layout (it looks for a flat `jamman.py` and skips every path starting with a dot

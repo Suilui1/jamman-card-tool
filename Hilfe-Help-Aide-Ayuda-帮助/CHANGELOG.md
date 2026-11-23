@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.136.18 — 2026-11-23
+
+### Geändert
+
+- **`pyserial-nachinstallieren.bat` liegt jetzt im Paket.** Ohne `pyserial` meldet das
+  Werkzeug unter Windows „kein Pedal gefunden", obwohl Windows das Pedal als COM3 kennt —
+  genau das hat am 23.11.2026 aufgehalten. Die Datei installiert das Paket per Doppelklick,
+  sagt „Fertig" und wartet auf einen Tastendruck; sie steht in beiden READMEs und auf beiden
+  Werkzeugseiten. Am Programm hat sich nichts geändert.
+
 ## 3.136.17 — 2026-11-23
 
 ### Geändert
