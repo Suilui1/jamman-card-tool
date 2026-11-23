@@ -376,7 +376,7 @@ ein Beleg dazukommt — nicht, wenn etwas plausibel klingt.
 |---|---|---|---|---|
 | JamMan Solo XT | `JamManSoloXT` | eigenes Gerät, täglich im Einsatz | geprüft | — |
 | JamMan Stereo | `JamManStereo` | Nutzer am eigenen Pedal, Kubuntu, 13.11.2026 („Funktioniert, top.") | geprüft | andere Systeme ungeprüft |
-| JamMan Delay | `JamManDelay` | Plywood1107, `patch.xml`/`phrase.xml` vom Gerät, 20.11.2026 (Issue #2) | geprüft | Name der Audiodatei in `PhraseA` |
+| JamMan Delay | `JamManDelay` | Plywood1107: `patch.xml`/`phrase.xml` vom Gerät (20.11.2026) und die Ordnerliste über USB (23.11.2026) — 13 Patches, `Patch01/PhraseA/phrase.wav` | geprüft | — |
 | JamMan Solo HD | unbekannt | — | **offen** | Gerät wird im Nur-Lesen-Modus geöffnet; „Struktur melden …" liefert den Beleg |
 
 **Die Belege selbst liegen im Repository unter `Belege/`** — mit Datum, Herkunft
@@ -676,11 +676,12 @@ Rutsch ist der Leser die bessere Wahl.
 das der Build von python.org; das mitgelieferte `/usr/bin/python3` bringt Tk 8.5 —
 damit zeichnet das Fenster nicht, und das Werkzeug weicht aufs Textmenü aus.
 
-**Warum vor dem ersten Schreiben die Karte kopieren?** Weil das Werkzeug bei
-Stereo und Delay den Aufbau **angenommen** hat (belegt ist er erst, wenn jemand ihn
-bestätigt hat), und weil eine Sicherung billiger ist als eine kaputte Karte. Seit
-1.x sichert das Werkzeug vor jedem Schreiben selbst — die zusätzliche Kopie von Hand
-ist der Gürtel zum Hosenträger.
+**Warum vor dem ersten Schreiben die Karte kopieren?** Weil eine Sicherung billiger
+ist als eine kaputte Karte — auch dann, wenn der Aufbau belegt ist: Beim Solo XT,
+Stereo und Delay ist er es (eigene Karte beziehungsweise Rückmeldungen aus Issue #2,
+siehe die Tabelle weiter oben), beim Solo HD noch nicht. Seit 1.x sichert das
+Werkzeug vor jedem Schreiben selbst — die zusätzliche Kopie von Hand ist der Gürtel
+zum Hosenträger.
 
 **macOS sagt, die Startdatei sei „aus dem Internet"?** Einmal im Terminal:
 

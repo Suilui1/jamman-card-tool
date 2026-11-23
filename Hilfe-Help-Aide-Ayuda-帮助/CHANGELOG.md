@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.136.14 — 2026-11-23
+
+### Geändert
+
+- **Der Aufbau der Delay-Karte ist vollständig belegt.** Plywood1107 hat in Issue #2 die
+  Ordnerliste seiner Karte über USB geschickt: `JamManDelay/` mit `Patch01 … Patch13`,
+  darunter `PhraseA/` und `patch.xml`, in `PhraseA` wiederum `phrase.wav` und
+  `phrase.xml`. Damit ist auch der letzte offene Punkt geschlossen — der Name der
+  Audiodatei. Beide READMEs sagen das jetzt so, statt „angenommen".
 ## 3.136.13 — 2026-11-23
 
 ### Geändert

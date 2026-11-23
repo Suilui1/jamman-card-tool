@@ -373,7 +373,7 @@ arrives — not when something sounds plausible.
 |---|---|---|---|---|
 | JamMan Solo XT | `JamManSoloXT` | own device, in daily use | confirmed | — |
 | JamMan Stereo | `JamManStereo` | a user on his own pedal, Kubuntu, 13 Nov 2026 ("Funktioniert, top.") | confirmed | other systems untested |
-| JamMan Delay | `JamManDelay` | Plywood1107, `patch.xml`/`phrase.xml` from the pedal, 20 Nov 2026 (issue #2) | confirmed | name of the audio file in `PhraseA` |
+| JamMan Delay | `JamManDelay` | Plywood1107: `patch.xml`/`phrase.xml` from the pedal (20 Nov 2026) and the folder listing over USB (23 Nov 2026) — 13 patches, `Patch01/PhraseA/phrase.wav` | confirmed | — |
 | JamMan Solo HD | unknown | — | **open** | the device opens read-only; "Report structure …" delivers the evidence |
 
 **The evidence itself sits in `Belege/` in the repository** — with date, source
