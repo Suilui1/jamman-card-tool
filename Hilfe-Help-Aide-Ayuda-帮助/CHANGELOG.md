@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.136.15 — 2026-11-23
+
+### Behoben
+
+- **Das englische README sagte beim Stereo und beim Delay weiter „assumed", während die
+  Tabelle „confirmed" führte.** Neue Prüfung `werkzeuge/belegt_pruefen.py`: sie liest
+  beide READMEs, vergleicht Tabelle und Fließtext und verlangt, daß Deutsch und Englisch
+  denselben Stand nennen. Gefunden hat sie den Widerspruch in der englischen Fassung,
+  nachdem die deutsche schon berichtigt war — das ist der Beweis, daß die Prüfung etwas
+  sieht.
+
 ## 3.136.14 — 2026-11-23
 
 ### Geändert

@@ -679,10 +679,11 @@ faster. For one full backup the reader is the better choice.
 the python.org build; the built-in `/usr/bin/python3` has Tk 8.5 — the window will
 not draw, and the tool falls back to its text menu.
 
-**Why copy the card before the first write?** Because for the Stereo and the Delay
-the layout is **assumed** (it is only confirmed once someone has verified it), and
-because a backup is cheaper than a broken card. Since 1.x the tool backs up before
-every write — the extra copy by hand is belt and braces.
+**Why copy the card before the first write?** Because a backup is cheaper than a
+broken card — even when the layout is on record, as it is for the Solo XT, the Stereo
+and the Delay (own card, and issue #2 for the other two; see the table above), but not
+yet for the Solo HD. Since 1.x the tool backs up before every write — the extra copy by
+hand is belt and braces.
 
 **macOS says the starter is "from the internet"?** Once in Terminal:
 
