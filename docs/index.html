@@ -138,6 +138,11 @@ bräuchten Python 3.8, weil es die letzte Fassung ist, die dort läuft.</p>
   damit bleibt das Fenster leer.</li>
   <li><a href="https://www.python.org/downloads/windows/">Python für Windows</a> —
   im Installer „Add python.exe to PATH" anhaken.</li>
+  <li><strong>Windows und USB:</strong> das Werkzeug spricht das Pedal über die serielle
+  Schnittstelle; dafür braucht Python das Paket <code>pyserial</code>. Fehlt es, meldet das
+  Werkzeug „kein Pedal gefunden", obwohl Windows den Anschluß als COM3 kennt. Im Paket liegt
+  <a href="pyserial-nachinstallieren.bat"><code>pyserial-nachinstallieren.bat</code></a> —
+  doppelklicken, fertig.</li>
   <li>Linux: <code>sudo apt install python3-tk</code> (Ubuntu/Debian, tkinter ist
   dort nicht dabei).</li>
   <li><a href="https://ffmpeg.org/download.html">ffmpeg</a> — nur für MP3 und M4A
