@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.136.17 — 2026-11-23
+
+### Geändert
+
+- **Lesen und Schreiben über USB sind jetzt auch unter Windows geprüft.** Bisher stand in
+  beiden READMEs „unter Windows noch nicht geprüft". Am 23.11.2026 lief der Weg dort durch:
+  Windows 10 (22H2, Build 19045) erkennt das Pedal als COM3, das Werkzeug hat es gefunden,
+  eine Sekunde Stille ließ sich auf einen freien Platz spielen, erschien mit 0:01 in der
+  Liste und ließ sich wieder löschen — jeder Schritt mit Rückmeldung.
+  Dabei aufgefallen und in den Text aufgenommen: ohne `pyserial` meldet das Werkzeug
+  „kein Pedal gefunden", obwohl Windows den Anschluß kennt.
+
 ## 3.136.16 — 2026-11-23
 
 ### Geändert

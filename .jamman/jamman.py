@@ -84,7 +84,7 @@ MAX_LOOP_SEKUNDEN = 600
 
 WOLL = (44100, 16, 2)          # was der JamMan erwartet: 44,1 kHz, 16 Bit, Stereo
 
-FASSUNG = "3.136.16 (23.11.2026)"
+FASSUNG = "3.136.17 (23.11.2026)"
 WINDOWS = os.name == "nt"
 MAC = sys.platform == "darwin"
 

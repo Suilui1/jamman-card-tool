@@ -192,8 +192,11 @@ found, the user is usually not in the `dialout` group:
 enough — a user on Kubuntu needed a **reboot** on 18 Nov 2026 before it
 worked. If `groups` does not list `dialout`, the session is still the old one.
 
-Windows 10 shows the pedal as "USB Serial Device (COMx)" — confirmed on
-17 Nov 2026. Reading and writing from Windows is not yet tested.
+Windows 10 (22H2, build 19045) shows the pedal as "USB Serial Device (COMx)" —
+confirmed on 17 Nov 2026. **Reading and writing over USB were tested on Windows on
+23 Nov 2026:** one second of silence written to a free slot, seen in the list (0:01) and
+deleted again. This needs `pyserial` (`pip install pyserial`); without it the tool reports
+"no pedal found" even though Windows knows the port.
 
 **Updating from 3.117 or older:** the built-in update cannot install the new
 layout (it looks for a flat `jamman.py` and skips every path starting with a dot

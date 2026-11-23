@@ -187,8 +187,11 @@ nicht immer — ein Nutzer unter Kubuntu hat es am 18.11.2026 erst nach einem
 **Neustart** zum Laufen gebracht. Wer `groups` aufruft und `dialout` dort
 nicht sieht, ist noch in der alten Sitzung.
 
-Windows 10 erkennt das Pedal als „USB-Seriell-Gerät (COMx)" — am 17.11.2026
-bestätigt. Gelesen und geschrieben wurde unter Windows noch nicht geprüft.
+Windows 10 (22H2, Build 19045) erkennt das Pedal als „USB-Seriell-Gerät (COMx)" —
+am 17.11.2026 bestätigt. **Lesen und Schreiben über USB sind am 23.11.2026 auch unter
+Windows geprüft worden:** eine Sekunde Stille auf einen freien Platz gespielt, in der Liste
+gesehen (0:01) und wieder gelöscht. Nötig ist dafür `pyserial` (`pip install pyserial`);
+ohne das Paket meldet das Werkzeug „kein Pedal gefunden", obwohl Windows den Anschluß kennt.
 
 **Aktualisieren aus Fassungen bis 3.117:** Die eingebaute Aktualisierung
 findet die neue Aufteilung nicht (sie sucht eine flache `jamman.py` und
