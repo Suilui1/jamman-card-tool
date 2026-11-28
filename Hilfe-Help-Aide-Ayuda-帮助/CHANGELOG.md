@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.136.19 — 2026-11-28
+
+### Behoben
+
+- **Der Selbsttest `funktionstest --alle-sprachen` stürzte in etwa vier von zehn Läufen ab**
+  (SIGSEGV 139 bzw. SIGBUS 138), und der Bericht blieb dabei leer. Ursache: fünf Tk-Fenster
+  wurden nacheinander in einem Prozeß gebaut und abgebaut. Jetzt läuft jede Sprache in einem
+  eigenen Prozeß; ein Absturz trifft nur diese Sprache und wird als Befund gemeldet
+  („Absturz, Rückgabe 139") statt den ganzen Lauf zu verschlucken. Gemessen: 0 Abstürze in
+  20 Läufen, vorher 4 in 10.
+
 ## 3.136.18 — 2026-11-23
 
 ### Geändert

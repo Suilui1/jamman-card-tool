@@ -84,7 +84,7 @@ MAX_LOOP_SEKUNDEN = 600
 
 WOLL = (44100, 16, 2)          # was der JamMan erwartet: 44,1 kHz, 16 Bit, Stereo
 
-FASSUNG = "3.136.18 (23.11.2026)"
+FASSUNG = "3.136.19 (28.11.2026)"
 WINDOWS = os.name == "nt"
 MAC = sys.platform == "darwin"
 
@@ -3096,6 +3096,8 @@ TEXTE = {
          '  Result: nothing found.',
         '  [FEHL] Fenster (%s): %s':
          '  [FAIL] window (%s): %s',
+      '  [FEHL] Fenstertest (%s): Absturz, Rückgabe %s':
+       '  [FAIL] window test (%s): crashed, exit code %s',
         '  [ok]   Fenster (%s): %d Knöpfe, keine Ausnahme':
          '  [ok]   window (%s): %d buttons, no exception',
         '%d Balkenfenster blieben offen':
@@ -4600,6 +4602,8 @@ TEXTE = {
          '  Résultat : aucun constat.',
         '  [FEHL] Fenster (%s): %s':
          '  [ÉCHEC] fenêtre (%s) : %s',
+      '  [FEHL] Fenstertest (%s): Absturz, Rückgabe %s':
+       '  [ÉCHEC] test de fenêtre (%s) : plantage, code de sortie %s',
         '  [ok]   Fenster (%s): %d Knöpfe, keine Ausnahme':
          '  [ok]   fenêtre (%s) : %d boutons, aucune exception',
         '%d Balkenfenster blieben offen':
@@ -6012,6 +6016,8 @@ TEXTE = {
          '  Resultado: sin hallazgos.',
         '  [FEHL] Fenster (%s): %s':
          '  [FALLO] ventana (%s): %s',
+      '  [FEHL] Fenstertest (%s): Absturz, Rückgabe %s':
+       '  [FALLO] prueba de ventana (%s): caída, código de salida %s',
         '  [ok]   Fenster (%s): %d Knöpfe, keine Ausnahme':
          '  [ok]   ventana (%s): %d botones, sin excepción',
         '%d Balkenfenster blieben offen':
@@ -7424,6 +7430,8 @@ TEXTE = {
          '  结果：未发现问题。',
         '  [FEHL] Fenster (%s): %s':
          '  [失败] 窗口（%s）：%s',
+      '  [FEHL] Fenstertest (%s): Absturz, Rückgabe %s':
+       '  [错误] 窗口测试（%s）：崩溃，返回码 %s',
         '  [ok]   Fenster (%s): %d Knöpfe, keine Ausnahme':
          '  [ok]   窗口（%s）：%d 个按钮，无异常',
         '%d Balkenfenster blieben offen':
@@ -9626,6 +9634,39 @@ def deutsche_reste(text):
     return treffer
 
 
+def _funktionstest_einzeln(sprachen):
+    """Führt den Funktionstest je Sprache in einem eigenen Prozeß aus.
+
+    Anlaß (28.11.2026): Mit --alle-sprachen stürzte das Programm in vier von
+    zehn Läufen ab (SIGSEGV 139 bzw. SIGBUS 138), und der Bericht blieb leer.
+    Der Absturz entsteht beim Bau und Abbau mehrerer Tk-Fenster in EINEM
+    Prozeß. Getrennt geprüft kann ein Absturz nur die eine Sprache treffen,
+    und er wird als Befund gemeldet statt den ganzen Lauf zu verschlucken.
+
+    Rückgabe: 0 = alle Sprachen ohne Befund, 1 = mindestens ein Befund oder
+    Absturz.
+    """
+    gesamt = 0
+    umgebung = dict(os.environ)
+    umgebung["JAMMAN_FENSTERTEST_EINZELN"] = "1"
+    for sprache in sprachen:
+        lauf = subprocess.run(
+            [sys.executable, os.path.abspath(__file__),
+             "funktionstest", "--sprache", sprache],
+            capture_output=True, text=True, env=umgebung, timeout=300)
+        if lauf.stdout:
+            print(lauf.stdout, end="")
+        if lauf.stderr:
+            print(lauf.stderr, end="")
+        if lauf.returncode != 0:
+            gesamt = 1
+            if lauf.returncode < 0 or lauf.returncode > 1:
+                print(T("  [FEHL] Fenstertest (%s): Absturz, Rückgabe %s")
+                      % (sprache, lauf.returncode))
+    sys.stdout.flush()
+    return gesamt
+
+
 def funktionstest(sprachen=None, still=False):
     """Prüft das Werkzeug auf DIESEM Rechner — ohne Pedal, ohne Netzzugang.
 
@@ -9645,6 +9686,11 @@ def funktionstest(sprachen=None, still=False):
     import io
     import tempfile
     global SICHERUNG_WURZEL
+
+    if sprachen is not None and len(sprachen) > 1 and not os.environ.get(
+            "JAMMAN_FENSTERTEST_EINZELN"):
+        # Jede Sprache in einem eigenen Prozeß: ein Absturz trifft dann nur sie.
+        return _funktionstest_einzeln(sprachen)
 
     if sprachen is None:
         # Die mit --sprache gesetzte Sprache gilt auch für den Fenstertest —
